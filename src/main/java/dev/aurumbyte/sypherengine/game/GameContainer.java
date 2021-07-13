@@ -5,6 +5,8 @@ import dev.aurumbyte.sypherengine.utils.image.Image;
 import dev.aurumbyte.sypherengine.utils.GameRenderer;
 
 public class GameContainer implements IGame {
+    // This class is just for tests... not for the actual engine... (yet)
+    
     private Image image;
 
     public GameContainer(){
