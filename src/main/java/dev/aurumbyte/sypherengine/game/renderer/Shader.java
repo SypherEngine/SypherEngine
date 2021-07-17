@@ -1,17 +1,15 @@
-package dev.aurumbyte.sypherengine.renderer;
+package dev.aurumbyte.sypherengine.game.renderer;
 
+import org.joml.*;
 import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Shader {
     private int shaderProgramID;
@@ -20,6 +18,8 @@ public class Shader {
     private float[] vertexArray;
     private int[] elementArray;
     int vaoID, vboID, eboID;
+
+    private boolean beingUsed = false;
 
     public Shader(String filePath) {
         this.filePath = filePath;
@@ -108,52 +108,69 @@ public class Shader {
         }
     }
 
-    public void init(float[] vertexArray, int[] elementArray, int positionsSize, int colorSize){
-        this.vertexArray = vertexArray;
-        this.elementArray = elementArray;
-
-        vaoID = glGenVertexArrays();
-        glBindVertexArray(vaoID);
-
-        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
-        vertexBuffer.put(vertexArray).flip();
-
-        vboID = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
-
-        IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
-        elementBuffer.put(elementArray).flip();
-
-        eboID = glGenBuffers();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
-
-        int floatSizeBytes = 4;
-        int vertexSizeBytes = (positionsSize + colorSize) * floatSizeBytes;
-
-        glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * floatSizeBytes);
-        glEnableVertexAttribArray(1);
-    }
-
     public void use(){
-        glUseProgram(shaderProgramID);
-        glBindVertexArray(vaoID);
-
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
+        if(!beingUsed) {
+            glUseProgram(shaderProgramID);
+            beingUsed = true;
+        }
     }
 
     public void disable(){
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-
-        glBindVertexArray(0);
         glUseProgram(0);
+        beingUsed = false;
+    }
+
+    public void uploadMatrix4f(String varname, Matrix4f matrix4f){
+        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+        matrix4f.get(matrixBuffer);
+
+        glUniformMatrix4fv(varLoaction, false, matrixBuffer);
+    }
+
+    public void uploadMatrix3f(String varname, Matrix3f matrix3f){
+        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(9);
+        matrix3f.get(matrixBuffer);
+
+        glUniformMatrix3fv(varLoaction, false, matrixBuffer);
+    }
+
+    public void uploadVector4f(String varname, Vector4f vector){
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform4f(varLocation, vector.x, vector.y, vector.z, vector.w);
+    }
+
+    public void uploadVector3f(String varname, Vector3f vector){
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform3f(varLocation, vector.x, vector.y, vector.z);
+    }
+
+    public void uploadVector2f(String varname, Vector2f vector){
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform2f(varLocation, vector.x, vector.y);
+    }
+
+    public void uploadFloat(String varname, float val){
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform1f(varLocation, val);
+    }
+
+    public void uploadInt(String varname, int val){
+        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform1i(varLoaction, val);
+    }
+
+    public void uploadTexture(String varname, int slot){
+        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform1i(varLoaction, slot);
     }
 }

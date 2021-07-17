@@ -1,7 +1,7 @@
 package dev.aurumbyte.sypherengine;
 
-import dev.aurumbyte.sypherengine.listeners.KeyListener;
-import dev.aurumbyte.sypherengine.listeners.MouseListener;
+import dev.aurumbyte.sypherengine.game.listeners.KeyListener;
+import dev.aurumbyte.sypherengine.game.listeners.MouseListener;
 import dev.aurumbyte.sypherengine.scene.LevelEditorScene;
 import dev.aurumbyte.sypherengine.scene.LevelScene;
 import dev.aurumbyte.sypherengine.scene.Scene;
@@ -45,10 +45,12 @@ public class SypherEngine {
             case 0:
                 currentScene = new LevelEditorScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             default:
                 assert false : "Unknown scene " + newScene + ".";

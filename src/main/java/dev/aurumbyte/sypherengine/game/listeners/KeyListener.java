@@ -1,4 +1,4 @@
-package dev.aurumbyte.sypherengine.listeners;
+package dev.aurumbyte.sypherengine.game.listeners;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
