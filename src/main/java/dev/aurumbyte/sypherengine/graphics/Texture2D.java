@@ -1,4 +1,4 @@
-package dev.aurumbyte.sypherengine.game.renderer;
+package dev.aurumbyte.sypherengine.graphics;
 
 import org.lwjgl.BufferUtils;
 
@@ -7,6 +7,7 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 
 public class Texture2D {
     private String filePath;
@@ -30,6 +31,8 @@ public class Texture2D {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
+
+        stbi_set_flip_vertically_on_load(true);
 
         ByteBuffer image = stbi_load(filePath, width, height, channels, 0);
 

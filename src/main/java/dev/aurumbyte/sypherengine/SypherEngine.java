@@ -40,6 +40,10 @@ public class SypherEngine {
         return engine;
     }
 
+    public static Scene getScene(){
+        return currentScene;
+    }
+
     public static void changeScene(int newScene){
         switch (newScene){
             case 0:
@@ -133,21 +137,21 @@ public class SypherEngine {
     }
 
     public void loop(){
-        float startTime = Time.getTime();
-        float endTime = Time.getTime();
+        float startTime = (float) glfwGetTime();
+        float endTime;
         float deltaTime = -1.0f;
 
         while(!glfwWindowShouldClose(window)){
             glfwPollEvents();
 
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             if(deltaTime >= 0) currentScene.update(deltaTime);
 
             glfwSwapBuffers(window);
 
-            endTime = Time.getTime();
+            endTime = (float) glfwGetTime();
             deltaTime = endTime - startTime;
             startTime = endTime;
         }

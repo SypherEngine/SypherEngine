@@ -1,4 +1,4 @@
-package dev.aurumbyte.sypherengine.game.renderer;
+package dev.aurumbyte.sypherengine.graphics;
 
 import org.joml.*;
 import org.lwjgl.BufferUtils;
@@ -163,14 +163,20 @@ public class Shader {
     }
 
     public void uploadInt(String varname, int val){
-        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
         use();
-        glUniform1i(varLoaction, val);
+        glUniform1i(varLocation, val);
     }
 
     public void uploadTexture(String varname, int slot){
-        int varLoaction = glGetUniformLocation(shaderProgramID, varname);
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
         use();
-        glUniform1i(varLoaction, slot);
+        glUniform1i(varLocation, slot);
+    }
+
+    public void uploadIntArray(String varname, int[] array){
+        int varLocation = glGetUniformLocation(shaderProgramID, varname);
+        use();
+        glUniform1iv(varLocation, array);
     }
 }
