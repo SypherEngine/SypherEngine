@@ -1,2 +1,2 @@
 # SypherEngine
-A (Currently WIP) game engine written in Java using LWJGL
+A (Currently WIP) game engine written in Java
