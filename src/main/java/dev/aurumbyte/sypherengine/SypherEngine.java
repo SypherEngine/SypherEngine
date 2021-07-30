@@ -1,159 +1,164 @@
 package dev.aurumbyte.sypherengine;
 
-import dev.aurumbyte.sypherengine.game.listeners.KeyListener;
-import dev.aurumbyte.sypherengine.game.listeners.MouseListener;
-import dev.aurumbyte.sypherengine.scene.LevelEditorScene;
-import dev.aurumbyte.sypherengine.scene.LevelScene;
-import dev.aurumbyte.sypherengine.scene.Scene;
-import dev.aurumbyte.sypherengine.utils.Time;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
+import dev.aurumbyte.sypherengine.game.IGame;
+import dev.aurumbyte.sypherengine.game.input.KeyBoardInput;
+import dev.aurumbyte.sypherengine.game.input.MouseInput;
+import dev.aurumbyte.sypherengine.utils.Renderer;
+import dev.aurumbyte.sypherengine.utils.GameWindow;
 
-import java.nio.IntBuffer;
+import java.awt.event.KeyEvent;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.stackPush;
-import static org.lwjgl.system.MemoryUtil.NULL;
+public class SypherEngine implements Runnable{
+    private static SypherEngine engine;
 
-public class SypherEngine {
-    private int width, height;
+    private Thread thread;
+    private final double UPDATE_LIMIT = 1.0 / 60.0;
+
+    private GameWindow window;
+    private Renderer renderer;
+
+    private MouseInput mouseInput;
+    private KeyBoardInput keyBoardInput;
+    private IGame game;
+
+    private double frameTime = 0;
+    private int frames = 0;
+    private int fps = 0;
+
+    private int width;
+    private int height;
+    private float scale;
     private String title;
-    private static SypherEngine engine = null;
-    private long window;
 
-    private static int currentSceneIndex = -1;
-    private static Scene currentScene;
-
-
-    private SypherEngine(){
-        this.width = 1280;
-        this.height = 720;
-        this.title = "Sypher Engine";
+    public SypherEngine(IGame game){
+        this.title = "SypherEngine";
+        this.scale = 3f;
+        this.width = 320;
+        this.height = 240;
+        this.game = game;
     }
 
+    /*
     public static SypherEngine get(){
-        if(SypherEngine.engine == null) engine = new SypherEngine();
+        if(engine == null) engine = new SypherEngine();
         return engine;
     }
 
-    public static Scene getScene(){
-        return currentScene;
-    }
 
-    public static void changeScene(int newScene){
-        switch (newScene){
-            case 0:
-                currentScene = new LevelEditorScene();
-                currentScene.init();
-                currentScene.start();
-                break;
-            case 1:
-                currentScene = new LevelScene();
-                currentScene.init();
-                currentScene.start();
-                break;
-            default:
-                assert false : "Unknown scene " + newScene + ".";
-                break;
-        }
+
+    public void init(IGame game){
+        SypherEngine.game = game;
+    }
+     */
+
+    public void start(){
+        window = new GameWindow(this);
+        renderer = new Renderer(this);
+        keyBoardInput = new KeyBoardInput(this);
+        mouseInput = new MouseInput(this);
+
+       thread = new Thread(this);
+       thread.start();
     }
 
     public void run(){
-        init();
-        loop();
+        boolean running = true;
 
-        // Free the window callbacks and destroy the window
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
+        double firstTime = 0;
+        double lastTime = System.nanoTime() / 1000000000.0;
+        double passedTime = 0;
+        double unprocessedTime = 0;
 
-        // Terminate GLFW and free the error callback
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
-    }
+        while(running){
+            boolean render = false;
 
-    public void init(){
-        // Setup an error callback. The default implementation
-        // will print the error message in System.err.
-        GLFWErrorCallback.createPrint(System.err).set();
+            firstTime = System.nanoTime() / 1000000000.0;
+            passedTime =  firstTime - lastTime;
+            lastTime = firstTime;
 
-        // Initialize GLFW. Most GLFW functions will not work before doing this.
-        if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
+            unprocessedTime += passedTime;
+            frameTime += passedTime;
 
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+            while(unprocessedTime >= UPDATE_LIMIT){
+                unprocessedTime -= UPDATE_LIMIT;
+                render = true;
+                game.update(this, (float) UPDATE_LIMIT);
+
+                if(keyBoardInput.isKeyUp(KeyEvent.VK_A)){
+                    System.out.println("A input successful");
+                }
 
 
+                keyBoardInput.update();
+                mouseInput.update();
 
-        // Create the window
-        window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+                if(frameTime >= 1.0){
+                    frameTime = 0;
+                    fps = frames;
+                    frames = 0;
+                }
+            }
 
-        if ( window == NULL ) throw new IllegalStateException("Failed to create the GLFW window");
-
-        glfwSetCursorPosCallback(window, MouseListener::mousePosCallback);
-        glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
-        glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
-
-        glfwSetKeyCallback(window, KeyListener::keyCallback);
-
-        // Get the thread stack and push a new frame
-        try ( MemoryStack stack = stackPush() ) {
-            IntBuffer pWidth = stack.mallocInt(1); // int*
-            IntBuffer pHeight = stack.mallocInt(1); // int*
-
-            // Get the window size passed to glfwCreateWindow
-            glfwGetWindowSize(window, pWidth, pHeight);
-
-            // Get the resolution of the primary monitor
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-            // Center the window
-            glfwSetWindowPos(
-                    window,
-                    (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height() - pHeight.get(0)) / 2
-            );
-        } // the stack frame is popped automatically
-
-        // Make the OpenGL context current
-        glfwMakeContextCurrent(window);
-        // Enable v-sync
-        glfwSwapInterval(1);
-
-        // Make the window visible
-        glfwShowWindow(window);
-
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GL.createCapabilities();
-        SypherEngine.changeScene(0);
-    }
-
-    public void loop(){
-        float startTime = (float) glfwGetTime();
-        float endTime;
-        float deltaTime = -1.0f;
-
-        while(!glfwWindowShouldClose(window)){
-            glfwPollEvents();
-
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            if(deltaTime >= 0) currentScene.update(deltaTime);
-
-            glfwSwapBuffers(window);
-
-            endTime = (float) glfwGetTime();
-            deltaTime = endTime - startTime;
-            startTime = endTime;
+            if(render){
+                renderer.clear();
+                game.render(this, renderer);
+                renderer.process();
+                window.update();
+                frames++ ;
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
         }
+
+        dispose();
     }
+
+    public void stop(){
+
+    }
+
+    private void dispose(){
+
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title){ this.title = title + " - SypherEngine"; }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public GameWindow getWindow() { return window; }
+
+    public KeyBoardInput getKeyBoardInput() { return keyBoardInput; }
+
+    public MouseInput getMouseInput() { return mouseInput; }
+
 }
