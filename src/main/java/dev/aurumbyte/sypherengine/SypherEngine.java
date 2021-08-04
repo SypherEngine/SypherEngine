@@ -15,6 +15,7 @@ public class SypherEngine implements Runnable{
     private final double UPDATE_LIMIT = 1.0 / 60.0;
 
     private GameWindow window;
+
     private Renderer renderer;
 
     private MouseInput mouseInput;
@@ -32,9 +33,9 @@ public class SypherEngine implements Runnable{
 
     public SypherEngine(IGame game){
         this.title = "SypherEngine";
-        this.scale = 3f;
-        this.width = 320;
-        this.height = 240;
+        this.scale = 1f;
+        this.width = 1280;
+        this.height = 720;
         this.game = game;
     }
 
@@ -68,6 +69,8 @@ public class SypherEngine implements Runnable{
         double lastTime = System.nanoTime() / 1000000000.0;
         double passedTime = 0;
         double unprocessedTime = 0;
+
+        game.init(this);
 
         while(running){
             boolean render = false;
@@ -161,4 +164,7 @@ public class SypherEngine implements Runnable{
 
     public MouseInput getMouseInput() { return mouseInput; }
 
+    public Renderer getRenderer() {
+        return renderer;
+    }
 }

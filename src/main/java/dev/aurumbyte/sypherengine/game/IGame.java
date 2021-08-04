@@ -4,6 +4,7 @@ import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 
 public interface IGame {
-    public abstract void update(SypherEngine engine, float deltaTime);
-    public abstract void render(SypherEngine engine, Renderer renderer);
+    void init(SypherEngine engine);
+    void update(SypherEngine engine, float deltaTime);
+    void render(SypherEngine engine, Renderer renderer);
 }
