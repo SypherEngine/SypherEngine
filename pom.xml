@@ -6,7 +6,7 @@
 
     <groupId>dev.aurumbyte.sypherengine</groupId>
     <artifactId>SypherEngine</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

@@ -1,16 +1,34 @@
-package dev.aurumbyte.sypherengine.game.components;
+package dev.aurumbyte.sypherengine.gameUtils.entity.components;
 
 import dev.aurumbyte.sypherengine.SypherEngine;
+import dev.aurumbyte.sypherengine.gameUtils.GameManager;
+import dev.aurumbyte.sypherengine.gameUtils.entity.Component;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 
-public abstract class GameObject {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GameObject<T extends GameManager<T>> extends Component<T> {
     protected String tag;
     protected float xPos, yPos;
     protected int width, height;
     protected boolean isDead = false;
 
-    public abstract void update(SypherEngine engine, float deltaTime);
-    public abstract void render(SypherEngine engine, Renderer renderer);
+    protected List<Component<T>> components = new ArrayList<>();
+
+    @Override
+    public void update(SypherEngine engine, T gameManager, float deltaTime) {
+        components.forEach(component -> component.update(engine, gameManager, deltaTime));
+    }
+
+    @Override
+    public void render(SypherEngine engine, Renderer renderer) {
+        components.forEach(component -> component.render(engine, renderer));
+    }
+
+    public void addComponent(Component<T> component){
+        components.add(component);
+    }
 
     public String getTag() {
         return tag;

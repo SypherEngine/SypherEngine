@@ -1,4 +1,4 @@
-package dev.aurumbyte.sypherengine.game.input;
+package dev.aurumbyte.sypherengine.gameUtils.input;
 
 import dev.aurumbyte.sypherengine.SypherEngine;
 

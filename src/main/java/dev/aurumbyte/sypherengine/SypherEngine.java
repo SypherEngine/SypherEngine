@@ -1,15 +1,17 @@
 package dev.aurumbyte.sypherengine;
 
-import dev.aurumbyte.sypherengine.game.IGame;
-import dev.aurumbyte.sypherengine.game.input.KeyBoardInput;
-import dev.aurumbyte.sypherengine.game.input.MouseInput;
+import dev.aurumbyte.sypherengine.gameUtils.GameManager;
+import dev.aurumbyte.sypherengine.gameUtils.input.KeyBoardInput;
+import dev.aurumbyte.sypherengine.gameUtils.input.MouseInput;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 import dev.aurumbyte.sypherengine.utils.GameWindow;
+import dev.aurumbyte.sypherengine.utils.logging.ByteLogger;
+import dev.aurumbyte.sypherengine.utils.logging.logUtils.LoggerLevel;
 
-import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class SypherEngine implements Runnable{
-    private static SypherEngine engine;
+    public static ByteLogger logger = new ByteLogger(false, LoggerLevel.DEBUG);
 
     private Thread thread;
     private final double UPDATE_LIMIT = 1.0 / 60.0;
@@ -20,7 +22,7 @@ public class SypherEngine implements Runnable{
 
     private MouseInput mouseInput;
     private KeyBoardInput keyBoardInput;
-    private IGame game;
+    private GameManager game;
 
     private double frameTime = 0;
     private int frames = 0;
@@ -30,8 +32,9 @@ public class SypherEngine implements Runnable{
     private int height;
     private float scale;
     private String title;
+    private final String version = "0.1.0";
 
-    public SypherEngine(IGame game){
+    public SypherEngine(GameManager game){
         this.title = "SypherEngine";
         this.scale = 1f;
         this.width = 1280;
@@ -47,19 +50,27 @@ public class SypherEngine implements Runnable{
 
 
 
-    public void init(IGame game){
-        SypherEngine.game = game;
+    public void init(IGame sypherengine.test.game){
+        SypherEngine.sypherengine.test.game = sypherengine.test.game;
     }
      */
 
     public void start(){
-        window = new GameWindow(this);
-        renderer = new Renderer(this);
-        keyBoardInput = new KeyBoardInput(this);
-        mouseInput = new MouseInput(this);
+        try {
+            logger.info("Initializing Engine... <Usage : SypherEngine v" + getVersion() + ">");
+            window = new GameWindow(this);
+            renderer = new Renderer(this);
+            keyBoardInput = new KeyBoardInput(this);
+            mouseInput = new MouseInput(this);
 
-       thread = new Thread(this);
-       thread.start();
+            thread = new Thread(this);
+
+            thread.start();
+
+            logger.info("Engine initialized successfully! Running Game <" + getTitle().replace(" - SypherEngine", "") + ">");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run(){
@@ -87,11 +98,6 @@ public class SypherEngine implements Runnable{
                 render = true;
                 game.update(this, (float) UPDATE_LIMIT);
 
-                if(keyBoardInput.isKeyUp(KeyEvent.VK_A)){
-                    System.out.println("A input successful");
-                }
-
-
                 keyBoardInput.update();
                 mouseInput.update();
 
@@ -112,7 +118,11 @@ public class SypherEngine implements Runnable{
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e){
-                    e.printStackTrace();
+                    try {
+                        logger.error(e);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -166,5 +176,9 @@ public class SypherEngine implements Runnable{
 
     public Renderer getRenderer() {
         return renderer;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }

@@ -46,14 +46,7 @@ public class Renderer {
     public void process(){
         processing = true;
 
-        Collections.sort(imageRequests, new Comparator<AssetRequests.ImageRequest>() {
-            @Override
-            public int compare(AssetRequests.ImageRequest o1, AssetRequests.ImageRequest o2) {
-                if(o1.zDepth < o2.zDepth) return -1;
-                if(o1.zDepth > o2.zDepth) return 1;
-                return 0;
-            }
-        });
+        imageRequests.sort(Comparator.comparingInt(o -> o.zDepth));
 
         for(int i = 0; i < imageRequests.size(); i++){
             AssetRequests.ImageRequest imageRequest = this.imageRequests.get(i);
