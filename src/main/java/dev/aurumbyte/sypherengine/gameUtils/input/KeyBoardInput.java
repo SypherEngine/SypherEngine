@@ -32,6 +32,10 @@ public class KeyBoardInput implements KeyListener {
         return keys[keyCode] && !keysLast[keyCode];
     }
 
+    public boolean horizontalAxis() {
+        return isKey(Keys.D) || isKey(Keys.A) || isKey(Keys.RIGHT) || isKey(Keys.LEFT);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -45,5 +49,11 @@ public class KeyBoardInput implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
+    }
+
+    public int getMovement() {
+        if(isKey(Keys.D) || isKey(Keys.RIGHT)) return  1;
+        if(isKey(Keys.A) || isKey(Keys.LEFT)) return -1;
+        return 0;
     }
 }

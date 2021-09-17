@@ -57,7 +57,7 @@ public class SypherEngine implements Runnable{
 
     public void start(){
         try {
-            logger.info("Initializing Engine... <Usage : SypherEngine v" + getVersion() + ">");
+            logger.info("Initializing Engine... [Usage : SypherEngine v" + getVersion() + "]");
             window = new GameWindow(this);
             renderer = new Renderer(this);
             keyBoardInput = new KeyBoardInput(this);
@@ -65,9 +65,8 @@ public class SypherEngine implements Runnable{
 
             thread = new Thread(this);
 
+            logger.info("Engine initialized successfully! Running Game " + getTitle().replace(" - SypherEngine", ""));
             thread.start();
-
-            logger.info("Engine initialized successfully! Running Game <" + getTitle().replace(" - SypherEngine", "") + ">");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,7 +80,7 @@ public class SypherEngine implements Runnable{
         double passedTime = 0;
         double unprocessedTime = 0;
 
-        game.init(this);
+        game.gameInit(this);
 
         while(running){
             boolean render = false;
@@ -96,7 +95,7 @@ public class SypherEngine implements Runnable{
             while(unprocessedTime >= UPDATE_LIMIT){
                 unprocessedTime -= UPDATE_LIMIT;
                 render = true;
-                game.update(this, (float) UPDATE_LIMIT);
+                game.gameUpdate(this, (float) UPDATE_LIMIT);
 
                 keyBoardInput.update();
                 mouseInput.update();
@@ -110,7 +109,7 @@ public class SypherEngine implements Runnable{
 
             if(render){
                 renderer.clear();
-                game.render(this, renderer);
+                game.gameRender(this, renderer);
                 renderer.process();
                 window.update();
                 frames++ ;
