@@ -124,6 +124,11 @@ public class Player extends GameObject<Game> {
             offX += Game.TS;
         }
 
+        if(engine.getKeyBoardInput().isKeyDown(Keys.UP)) game.addObject(new Bullet(tileX, tileY, (int)(offX + width / 2), (int)(offY + height / 2), 0));
+        if(engine.getKeyBoardInput().isKeyDown(Keys.RIGHT)) game.addObject(new Bullet(tileX, tileY, (int)(offX + width / 2), (int)(offY + height / 2), 1));
+        if(engine.getKeyBoardInput().isKeyDown(Keys.DOWN)) game.addObject(new Bullet(tileX, tileY, (int)(offX + width / 2), (int)(offY + height / 2), 2));
+        if(engine.getKeyBoardInput().isKeyDown(Keys.LEFT)) game.addObject(new Bullet(tileX, tileY, (int)(offX + width / 2), (int)(offY + height / 2), 3));
+
 
         xPos = tileX * Game.TS + offX;
         yPos = tileY * Game.TS + offY;

@@ -2,6 +2,7 @@ package sypherengine.test.game;
 
 import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.GameManager;
+import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 import dev.aurumbyte.sypherengine.utils.image.Image;
 
@@ -57,6 +58,10 @@ public class Game extends GameManager<Game> {
                 collisions[x + y * levelWidth] = level.getPixels()[x + y * levelWidth] == 0xff000000;
             }
         }
+    }
+
+    public void addObject(GameObject<Game> gameObject){
+        gameObjects.add(gameObject);
     }
 
     public boolean getCollision(int x, int y){
