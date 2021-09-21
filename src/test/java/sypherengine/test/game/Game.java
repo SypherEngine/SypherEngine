@@ -4,6 +4,7 @@ import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.GameManager;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.utils.Renderer;
+import dev.aurumbyte.sypherengine.utils.camera.Camera;
 import dev.aurumbyte.sypherengine.utils.image.Image;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class Game extends GameManager<Game> {
         gameObjects.add(new Player(3, 3));
         gameManager = this;
         loadLevel("/level.png");
+
+        camera = new Camera<>("Player");
     }
 
     @Override
@@ -33,10 +36,14 @@ public class Game extends GameManager<Game> {
                 i--;
             }
         }
+
+        camera.update(engine, this, deltaTime);
     }
 
     @Override
     public void render(SypherEngine engine, Renderer renderer) {
+        camera.render(engine, renderer);
+
         for(int y = 0; y < levelHeight; y++){
             for(int x = 0; x < levelWidth; x++){
                 if(collisions[x + y * levelWidth]) renderer.drawFilledRect(x * TS, y * TS, TS, TS, 0xff0f0f0f);

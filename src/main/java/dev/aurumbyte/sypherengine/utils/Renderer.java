@@ -18,6 +18,8 @@ public class Renderer {
     private int[] zBuffer;
     private int zDepth = 0;
 
+    private int camX, camY;
+
     private int[] lightMap;
     private int[] lightBlock;
 
@@ -113,6 +115,9 @@ public class Renderer {
     }
 
     public void drawImage(Image image, int offX, int offY){
+        offX -= camX;
+        offY -= camY;
+
         if(image.isAlpha() && !processing) {
             imageRequests.add(new AssetRequests.ImageRequest(image, zDepth, offX, offY));
             return;
@@ -144,6 +149,9 @@ public class Renderer {
     }
 
     public void drawImageTile(ImageTile imageTile, int offX, int offY, int tileX, int tileY){
+        offX -= camX;
+        offY -= camY;
+
         if(imageTile.isAlpha() && !processing) {
             imageRequests.add(new AssetRequests.ImageRequest(imageTile.getTileImage(tileX, tileY), zDepth, offX, offY));
             return;
@@ -175,6 +183,9 @@ public class Renderer {
     }
 
     public void drawRect(int offX, int offY, int width, int height, int color){
+        offX -= camX;
+        offY -= camY;
+
         for(int y = 0; y <= height; y++){
             setPixel(offX, y + offY, color);
             setPixel(offX + width, y + offY, color);
@@ -187,25 +198,17 @@ public class Renderer {
     }
 
     public void drawFilledRect(int offX, int offY, int width, int height, int color){
-        int newX = 0, newY = 0;
-        int newWidth = width;
-        int newHeight = height;
-
-        // Doesn't render when image goes offscreen
-        if(offX < -width) return;
-        if(offY < -height) return;
-        if(offX >= pixelWidth) return;
-        if(offY >= pixelHeight) return;
+        offX -= camX;
+        offY -= camY;
 
         // Doesn't render parts of image that go offscreen (Clipping)
-        if(offX < 0) newX -= offX;
-        if(offY < 0) newY -= offY;
+        //if(offX < -width) return;
+        //if(offY < -height) return;
+        //if(offX > pixelWidth) return;
+        //if(offY > pixelHeight) return;
 
-        if(newWidth + offX > pixelWidth) newWidth -= newWidth + offX - pixelWidth;
-        if(newHeight + offY > pixelHeight) newHeight -= newHeight + offY - pixelHeight;
-
-        for(int y = newY; y < newHeight; y++){
-            for(int x = newX; x < newWidth; x++){
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
                 setPixel(x + offX, y + offY, color);
             }
         }
@@ -220,6 +223,9 @@ public class Renderer {
     }
 
     private void drawLightRequest(Light light, int offX, int offY){
+        offX -= camX;
+        offY -= camY;
+
         for(int i = 0; i <= light.getDiameter(); i++){
             drawLightLine(light, light.getRadius(), light.getRadius(), i, 0, offX, offY);
             drawLightLine(light, light.getRadius(), light.getRadius(), i, light.getDiameter(), offX, offY);
@@ -267,5 +273,18 @@ public class Renderer {
 
     public void setAmbientColor(int ambientColor) {
         this.ambientColor = ambientColor;
+    }
+
+    public void setCamX(int camX) {
+        this.camX = camX;
+    }
+
+    public void setCamY(int camY) {
+        this.camY = camY;
+    }
+
+    public void setCamPos(int camX, int camY) {
+        this.camX = camX;
+        this.camY = camY;
     }
 }

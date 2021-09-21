@@ -3,6 +3,7 @@ package dev.aurumbyte.sypherengine.gameUtils;
 import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.utils.Renderer;
+import dev.aurumbyte.sypherengine.utils.camera.Camera;
 import dev.aurumbyte.sypherengine.utils.scene.Scene;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
     public List<GameObject<T>> gameObjects = new ArrayList<>();
     public T gameManager;
     public Scene currentScene;
-    //public Camera<T> camera;
+    public Camera<T> camera;
 
     public void gameInit(SypherEngine engine){
         if(currentScene == null){
@@ -34,5 +35,13 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
     public void setCurrentScene(Scene scene){
         this.currentScene = scene;
     }
-    //public Camera<T> getCamera(){ return camera; }
+    public Camera<T> getCamera(){ return camera; }
+
+    public GameObject<T> getObject(String tag){
+        for(GameObject<T> object : gameObjects){
+            if(object.getTag().equals(tag)) return object;
+        }
+
+        return null;
+    }
 }
