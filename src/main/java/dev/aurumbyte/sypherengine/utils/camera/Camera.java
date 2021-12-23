@@ -7,7 +7,7 @@ import dev.aurumbyte.sypherengine.utils.Renderer;
 
 public class Camera<T extends GameManager<T>> /*extends Component<T>*/ {
     private double offX, offY;
-    private double cameraSpeed = 10;
+    private double cameraSpeed = 20;
 
     private String tag;
     private GameObject<T> target = null;
@@ -23,8 +23,13 @@ public class Camera<T extends GameManager<T>> /*extends Component<T>*/ {
         double targetX = (target.getxPos() + target.getWidth() / 2.0) - engine.getWidth() / 2.0;
         double targetY = (target.getyPos() + target.getHeight() / 2.0) - engine.getHeight() / 2.0;
 
-        offX -= deltaTime * (offX - targetX) * cameraSpeed;
-        offY -= deltaTime * (offY - targetY) * cameraSpeed;
+        offX -= deltaTime * (int)(offX - targetX) * cameraSpeed;
+        offY -= deltaTime * (int)(offY - targetY) * cameraSpeed;
+
+        if(offX < 0) offX = 0;
+        if(offY < 0) offY = 0;
+        if(offX + engine.getWidth() > game.getLevelWidth() * game.defaultTileSize) offX = game.getLevelWidth() * game.defaultTileSize - engine.getWidth();
+        if(offY + engine.getHeight() > game.getLevelHeight() * game.defaultTileSize) offY = game.getLevelHeight() * game.defaultTileSize - engine.getHeight();
     }
 
     public void render(SypherEngine engine, Renderer renderer) {

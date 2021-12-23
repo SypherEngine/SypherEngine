@@ -4,6 +4,7 @@ import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 import dev.aurumbyte.sypherengine.utils.camera.Camera;
+import dev.aurumbyte.sypherengine.utils.image.Image;
 import dev.aurumbyte.sypherengine.utils.scene.Scene;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
     public T gameManager;
     public Scene currentScene;
     public Camera<T> camera;
+    public Image level;
+    public static int defaultTileSize = 16;
 
     public void gameInit(SypherEngine engine){
         if(currentScene == null){
@@ -43,5 +46,21 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
         }
 
         return null;
+    }
+
+    public Image getLevel() {
+        return level;
+    }
+
+    public int getLevelWidth(){
+        return level.getWidth();
+    }
+
+    public int getLevelHeight(){
+        return level.getHeight();
+    }
+
+    public void setDefaultTileSize(int defaultTileSize) {
+        this.defaultTileSize = defaultTileSize;
     }
 }

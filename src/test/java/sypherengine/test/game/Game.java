@@ -10,9 +10,9 @@ import dev.aurumbyte.sypherengine.utils.image.Image;
 import java.io.IOException;
 
 public class Game extends GameManager<Game> {
-    public static final int TS = 16;
     private boolean[] collisions;
     private int levelWidth, levelHeight;
+    public static int TS = defaultTileSize;
 
     public Game(){
         gameObjects.add(new Player(3, 3));
@@ -46,15 +46,15 @@ public class Game extends GameManager<Game> {
 
         for(int y = 0; y < levelHeight; y++){
             for(int x = 0; x < levelWidth; x++){
-                if(collisions[x + y * levelWidth]) renderer.drawFilledRect(x * TS, y * TS, TS, TS, 0xff0f0f0f);
-                else renderer.drawFilledRect(x * TS, y * TS, TS, TS, 0xfff9f9f9);
+                if(collisions[x + y * levelWidth]) renderer.drawFilledRect(x * defaultTileSize, y * defaultTileSize, defaultTileSize, defaultTileSize, 0xff0f0f0f);
+                else renderer.drawFilledRect(x * defaultTileSize, y * defaultTileSize, defaultTileSize, defaultTileSize, 0xfff9f9f9);
             }
         }
         gameObjects.forEach(gameObject -> gameObject.render(engine, renderer));
     }
 
     public void loadLevel(String path){
-        Image level  = new Image(path);
+        level  = new Image(path);
         levelWidth = level.getWidth();
         levelHeight = level.getHeight();
 

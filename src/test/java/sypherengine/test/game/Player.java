@@ -4,15 +4,21 @@ import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.gameUtils.input.Keys;
 import dev.aurumbyte.sypherengine.utils.Renderer;
+import dev.aurumbyte.sypherengine.utils.image.ImageTile;
 
 public class Player extends GameObject<Game> {
     int tileX, tileY;
     float offX, offY;
 
+    private int direction = 0;
+    private float animation = 0;
     int speed = 100;
     float fallDistance, fallSpeed = 10f;
     boolean ground = false;
+    boolean groundLast = false;
     float jump = -4;
+
+    private final ImageTile playerImage = new ImageTile("/playerTileset.png", 16, 16);
 
     public Player(float xPos, float yPos){
         this.tag = "Player";
@@ -51,6 +57,7 @@ public class Player extends GameObject<Game> {
             }
          */
             if(engine.getKeyBoardInput().isKey(Keys.D)){
+
                 if(game.getCollision(tileX + 1, tileY) || game.getCollision(tileX + 1, tileY + (int)(Math.signum((int) offY)))) {
                     if(offX < 0){
                         offX += deltaTime * speed;
@@ -61,6 +68,7 @@ public class Player extends GameObject<Game> {
             }
 
             if(engine.getKeyBoardInput().isKey(Keys.A)){
+                direction = 1;
                 if(game.getCollision(tileX - 1, tileY) || game.getCollision(tileX - 1, tileY + (int)(Math.signum((int) offY)))) {
                     if(offX > 0){
                         offX -= deltaTime * speed;
@@ -100,6 +108,36 @@ public class Player extends GameObject<Game> {
         }
 
         /*
+         * ========================================
+         * ANIMATING PLAYER
+         * ========================================
+         */
+        int animationSpeed = 8;
+
+        if(engine.getKeyBoardInput().isKey(Keys.D)){
+            direction = 0;
+            animation += deltaTime * animationSpeed;
+
+            // The player animation tileset has only 4 files, hence a check
+            if(animation >= 4) animation = 0;
+        }
+        else if(engine.getKeyBoardInput().isKey(Keys.A)){
+            direction = 1;
+            animation += deltaTime * animationSpeed;
+
+            // The player animation tileset has only 4 files, hence a check
+            if(animation >= 4) animation = 0;
+        }
+        else {
+            animation = 0;
+        }
+
+        if(!ground) animation = 1;
+        if(ground && !groundLast) animation = 2;
+
+        groundLast = ground;
+
+        /*
         * ========================================
         * MISCELLANEOUS
         * ========================================
@@ -135,6 +173,7 @@ public class Player extends GameObject<Game> {
     }
 
     public void render(SypherEngine engine, Renderer renderer) {
-        renderer.drawFilledRect((int)xPos, (int)yPos, width, height, 0xff00ffb4);
+        //renderer.drawFilledRect((int)xPos, (int)yPos, width, height, 0xff00ffb4);
+        renderer.drawImageTile(playerImage, (int)xPos, (int)yPos, (int)animation, direction);
     }
 }

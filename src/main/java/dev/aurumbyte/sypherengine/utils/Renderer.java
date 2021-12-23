@@ -176,7 +176,7 @@ public class Renderer {
 
         for(int y = newY; y < newHeight; y++){
             for(int x = newX; x < newWidth; x++){
-                setPixel(x + offX, y + offY, imageTile.getPixels()[(x + tileX * imageTile.getTileWidth()) + (y + tileY * imageTile.getHeight()) * imageTile.getWidth()]);
+                setPixel(x + offX, y + offY, imageTile.getPixels()[(x + tileX * imageTile.getTileWidth()) + (y + tileY * imageTile.getTileHeight()) * imageTile.getWidth()]);
                 setLightBlock(x + offX, y + offY, imageTile.getLightBlock());
             }
         }
