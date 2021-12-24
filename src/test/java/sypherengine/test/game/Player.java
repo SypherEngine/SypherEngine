@@ -10,6 +10,8 @@ public class Player extends GameObject<Game> {
     int tileX, tileY;
     float offX, offY;
 
+    int padding, paddingTop;
+
     private int direction = 0;
     private float animation = 0;
     int speed = 100;
@@ -30,6 +32,9 @@ public class Player extends GameObject<Game> {
         this.yPos = yPos * Game.TS;
         this.width = Game.TS;
         this.height = Game.TS;
+
+        padding = 5;
+        paddingTop = 2;
     }
 
     public void update(SypherEngine engine, Game game, float deltaTime) {
@@ -59,22 +64,18 @@ public class Player extends GameObject<Game> {
             if(engine.getKeyBoardInput().isKey(Keys.D)){
 
                 if(game.getCollision(tileX + 1, tileY) || game.getCollision(tileX + 1, tileY + (int)(Math.signum((int) offY)))) {
-                    if(offX < 0){
-                        offX += deltaTime * speed;
-                        if(offX > 0) offX = 0;
-                    }
-                    else offX = 0;
+                    offX += deltaTime * speed;
+                    if(offX > padding) offX = padding;
+
                 } else offX += deltaTime * speed;
             }
 
             if(engine.getKeyBoardInput().isKey(Keys.A)){
                 direction = 1;
                 if(game.getCollision(tileX - 1, tileY) || game.getCollision(tileX - 1, tileY + (int)(Math.signum((int) offY)))) {
-                    if(offX > 0){
-                        offX -= deltaTime * speed;
-                        if(offX < 0) offX = 0;
-                    }
-                    else offX = 0;
+                    offX -= deltaTime * speed;
+                    if(offX < -(padding)) offX = -(padding);
+
                 } else offX -= deltaTime * speed;
             }
 
@@ -93,14 +94,14 @@ public class Player extends GameObject<Game> {
         offY += fallDistance;
 
         if(fallDistance < 0){
-            if ((game.getCollision(tileX, tileY - 1) || game.getCollision(tileX + (int) (Math.signum((int) offX)), tileY - 1)) && offY < 0) {
+            if ((game.getCollision(tileX, tileY - 1) || game.getCollision(tileX + (int) (Math.signum((int)Math.abs(offX) > padding ? offX : 0)), tileY - 1)) && offY < -paddingTop) {
                 fallDistance = 0;
-                offY = 0;
+                offY = -paddingTop;
             }
         }
 
         if(fallDistance > 0) {
-            if ((game.getCollision(tileX, tileY + 1) || game.getCollision(tileX + (int) (Math.signum((int) offX)), tileY + 1)) && offY > 0) {
+            if ((game.getCollision(tileX, tileY + 1) || game.getCollision(tileX + (int) (Math.signum((int) Math.abs(offX) > padding ? offX : 0)), tileY + 1)) && offY > 0) {
                 fallDistance = 0;
                 offY = 0;
                 ground = true;
