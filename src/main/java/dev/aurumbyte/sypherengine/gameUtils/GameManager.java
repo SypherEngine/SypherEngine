@@ -2,6 +2,7 @@ package dev.aurumbyte.sypherengine.gameUtils;
 
 import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
+import dev.aurumbyte.sypherengine.physics.Physics;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 import dev.aurumbyte.sypherengine.utils.camera.Camera;
 import dev.aurumbyte.sypherengine.utils.image.Image;
@@ -16,6 +17,7 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
     public Scene currentScene;
     public Camera<T> camera;
     public Image level;
+    public Physics<T> physics = new Physics<>();
     public static int defaultTileSize = 16;
 
     public void gameInit(SypherEngine engine){
@@ -61,6 +63,6 @@ public abstract class GameManager<T extends GameManager<T>> extends Scene {
     }
 
     public void setDefaultTileSize(int defaultTileSize) {
-        this.defaultTileSize = defaultTileSize;
+        GameManager.defaultTileSize = defaultTileSize;
     }
 }

@@ -8,8 +8,7 @@ public class Bullet extends GameObject<Game> {
     int tileX, tileY;
     float offX, offY;
 
-    private float speed = 200;
-    private int direction;
+    private final int direction;
 
     public Bullet(int tileX, int tileY, float offX, float offY, int direction){
         this.direction = direction;
@@ -19,14 +18,26 @@ public class Bullet extends GameObject<Game> {
         this.tileY = tileY;
         this.offX = offX;
         this.offY = offY;
+        this.padding = 0;
+        this.paddingTop = 0;
+
+        this.width = 4;
+        this.height = 4;
     }
 
+    @Override
+    public void init() {
+
+    }
+
+    @Override
     public void update(SypherEngine engine, Game gameManager, float deltaTime){
-        switch (direction){
-            case 0: offY -= speed * deltaTime; break;
-            case 1: offX += speed * deltaTime; break;
-            case 2: offY += speed * deltaTime; break;
-            case 3: offX -= speed * deltaTime; break;
+        float speed = 200;
+        switch (direction) {
+            case 0 -> offY -= speed * deltaTime;
+            case 1 -> offX += speed * deltaTime;
+            case 2 -> offY += speed * deltaTime;
+            case 3 -> offX -= speed * deltaTime;
         }
 
         if(offY > Game.TS / 2){
@@ -54,7 +65,13 @@ public class Bullet extends GameObject<Game> {
         yPos = tileY * Game.TS + offY;
     }
 
+    @Override
     public void render(SypherEngine engine, Renderer renderer) {
-        renderer.drawFilledRect((int)xPos - 2, (int)yPos - 2, 4, 4, 0xffff0000);
+        renderer.drawFilledRect((int)xPos, (int)yPos, 4, 4, 0xffff0000);
+    }
+
+    @Override
+    public void event(GameObject<Game> other) {
+
     }
 }

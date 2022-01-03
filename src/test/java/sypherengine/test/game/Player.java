@@ -3,14 +3,13 @@ package sypherengine.test.game;
 import dev.aurumbyte.sypherengine.SypherEngine;
 import dev.aurumbyte.sypherengine.gameUtils.entity.components.GameObject;
 import dev.aurumbyte.sypherengine.gameUtils.input.Keys;
+import dev.aurumbyte.sypherengine.physics.AABB;
 import dev.aurumbyte.sypherengine.utils.Renderer;
 import dev.aurumbyte.sypherengine.utils.image.ImageTile;
 
 public class Player extends GameObject<Game> {
     int tileX, tileY;
     float offX, offY;
-
-    int padding, paddingTop;
 
     private int direction = 0;
     private float animation = 0;
@@ -30,13 +29,21 @@ public class Player extends GameObject<Game> {
         this.offY = 1;
         this.xPos = xPos * Game.TS;
         this.yPos = yPos * Game.TS;
-        this.width = Game.TS;
-        this.height = Game.TS;
+        this.width = Game.TS - 10;
+        this.height = Game.TS - 2;
 
-        padding = 5;
-        paddingTop = 2;
+        this.padding = 5;
+        this.paddingTop = 2;
+
+        this.addComponent(new AABB<>(this));
     }
 
+    @Override
+    public void init(){
+
+    }
+
+    @Override
     public void update(SypherEngine engine, Game game, float deltaTime) {
         /*
         * =======================================
@@ -171,10 +178,21 @@ public class Player extends GameObject<Game> {
 
         xPos = tileX * Game.TS + offX;
         yPos = tileY * Game.TS + offY;
+
+        this.updateComponents(engine, game, deltaTime);
     }
 
+    @Override
     public void render(SypherEngine engine, Renderer renderer) {
         //renderer.drawFilledRect((int)xPos, (int)yPos, width, height, 0xff00ffb4);
         renderer.drawImageTile(playerImage, (int)xPos, (int)yPos, (int)animation, direction);
+        this.renderComponents(engine, renderer);
+    }
+
+    @Override
+    public void event(GameObject<Game> other) {
+        if(other.getTag().equalsIgnoreCase("Platform")){
+
+        }
     }
 }

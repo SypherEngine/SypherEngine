@@ -14,8 +14,16 @@ public class Game extends GameManager<Game> {
     private int levelWidth, levelHeight;
     public static int TS = defaultTileSize;
 
+    public Platform platform1 = new Platform();
+    public Platform platform2 = new Platform(550, 172);
+
     public Game(){
         gameObjects.add(new Player(3, 3));
+        gameObjects.add(platform1);
+        //gameObjects.add(platform2);
+
+        //platform1.setDebugCollison(true, "Platform 1 not colliding");
+
         gameManager = this;
         loadLevel("/level.png");
 
@@ -25,18 +33,21 @@ public class Game extends GameManager<Game> {
     @Override
     public void init(SypherEngine engine){
         engine.getRenderer().setAmbientColor(-1);
+        gameObjects.forEach(GameObject::init);
     }
 
     @Override
     public void update(SypherEngine engine, float deltaTime) {
         for(int i = 0; i < gameObjects.size(); i++){
             gameObjects.get(i).update(engine, gameManager, deltaTime);
+            gameObjects.forEach(gameObject -> gameObject.updateComponents(engine, gameManager, deltaTime));
             if(gameObjects.get(i).isDead()){
                 gameObjects.remove(i);
                 i--;
             }
         }
 
+        physics.update();
         camera.update(engine, this, deltaTime);
     }
 
@@ -51,6 +62,7 @@ public class Game extends GameManager<Game> {
             }
         }
         gameObjects.forEach(gameObject -> gameObject.render(engine, renderer));
+        gameObjects.forEach(gameObject -> gameObject.renderComponents(engine, renderer));
     }
 
     public void loadLevel(String path){
