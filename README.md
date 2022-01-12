@@ -1,7 +1,7 @@
 <img src="https://github.com/SypherEngine/SypherEngine/blob/readme/logos/SypherEngineBanner.svg">
 <h1 align="center"><strong>A Simple and Lightweight Java Game Engine</strong></h1>
 
-`SypherEngine` is a simple game engine, made using pure Java, designed to be lightweight, fast and easy to use. 
+<p align="center"><code>SypherEngine</code> is a simple game engine, made using pure Java, designed to be lightweight, fast and easy to use.</p> 
 
 <h1 align="center">🔨 Features 🔨</h1> 
 
