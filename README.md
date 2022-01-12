@@ -31,7 +31,7 @@ If you do, then include the engine into your project as follows
 
 After downloading the source, build the engine, using `mvn clean package`.
 
-<h1 align="center">SypherEngine HelloWorld 👋</h1>
+<h1 align="center">👋 SypherEngine HelloWorld 👋</h1>
 
 Here's a small program to get started with `SypherEngine`...
 
@@ -61,7 +61,7 @@ public class Main extends GameManager<Main> {
   }
 }
 ```
-<h1 align="center">License</h1>
+<h1 align="center">📇 License 📇</h1>
 
 This project follows the MIT license, refer [LICENSE.txt]()
 
