@@ -1,4 +1,4 @@
-<img src="https://github.com/SypherEngine/SypherEngine/blob/readme/logos/SypherEngineBanner.svg">
+<img src="https://github.com/SypherEngine/SypherEngine/blob/main/logos/SypherEngineBanner.svg">
 <h1 align="center"><strong>A Simple and Lightweight Java Game Engine</strong></h1>
 
 <p align="center"><code>SypherEngine</code> is a simple game engine, made using pure Java, designed to be lightweight, fast and easy to use.</p> 
@@ -63,11 +63,11 @@ public class Main extends GameManager<Main> {
 ```
 <h1 align="center">📇 License 📇</h1>
 
-This project follows the MIT license, refer [LICENSE.txt]()
+This project follows the MIT license, refer [LICENSE](https://github.com/SypherEngine/SypherEngine/blob/main/LICENSE)
 
 <h1 align="center">🤝 Contributing 🤝</h1>
 
-From the smallest change to a bug fix or feature implementation, Contributions are extremely welcome! Refer the [Contributing Guidelines]() for more info, and thank you for your help!
+From the smallest change to a bug fix or feature implementation, Contributions are extremely welcome! Refer the [Contributing Guidelines](https://github.com/SypherEngine/SypherEngine/blob/main/CONTRIBUTING.md) for more info, and thank you for your help!
 
 <h1 align="center">🫂 Support 🫂</h1>
 
