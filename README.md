@@ -3,6 +3,10 @@
 
 <p align="center"><code>SypherEngine</code> is a simple game engine, made using pure Java, designed to be lightweight, fast and easy to use.</p> 
 
+<h3 align="center"><strong>Disclaimer</strong></h3> 
+
+> SypherEngine is currently in an alpha stage and is subject to many changes. While it does have basic features, there are many bugs still untracked and the documentation is currently a work in progress... If you wish to help, all help is appreciated!
+
 <h1 align="center">🔨 Features 🔨</h1> 
 
 - Rendering Framework
