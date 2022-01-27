@@ -14,8 +14,6 @@
 - Scenes and Scene Switching
 - Audio Engine
 - Sprite rendering and Animations
-- Lighting and Shadows
-- 2D Camera 
 
 <h1 align="center">💻 Getting SypherEngine 💻</h1>
 
@@ -40,7 +38,7 @@ After downloading the source, build the engine, using `mvn clean package`.
 Here's a small program to get started with `SypherEngine`...
 
 ```java
-public class Main extends GameManager<Main> {
+public class Main extends GameManager {
 
   //These can be left blank for this simple hello world program
   @Override
@@ -49,19 +47,18 @@ public class Main extends GameManager<Main> {
   }
   
   @Override
-  public void update(SypherEngine engine, float deltaTime){
+  public void update(float deltaTime){
     //updating
   }
 
   @Override
-  public void render(SypherEngine engine, Renderer renderer){
+  public void render(Renderer renderer){
     //rendering
   }
 
   public static void main(String[] args){
-    SypherEngine engine = new SypherEngine(new Main()); //initializes the engine with the main game class
-    engine.setTitle("HelloWorld!"); //sets 
-    engine.start();
+    SypherEngine.init(new Main());
+    SypherEngine.run();
   }
 }
 ```
