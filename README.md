@@ -47,7 +47,7 @@ public class Main extends GameManager {
   }
   
   @Override
-  public void update(float deltaTime){
+  public void update(SypherEngine engine, float deltaTime){
     //updating
   }
 
