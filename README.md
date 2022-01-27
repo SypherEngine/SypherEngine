@@ -33,6 +33,9 @@ If you do, then include the engine into your project as follows
 
 After downloading the source, build the engine, using `mvn clean package`.
 
+#### Don't want to build it yourself?
+There is a pre-built binary of SypherEngine in the releases tab.
+
 Add it to your project classpath to start developing!
 
 <h1 align="center">👋 SypherEngine HelloWorld 👋</h1>
