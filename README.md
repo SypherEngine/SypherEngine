@@ -19,7 +19,7 @@
 
 To use `SypherEngine`, please do make sure that you have the following requirements installed on your device.
 
-- Java 16 or greater
+- Java 17 or greater
 - Maven
 
 <!--
