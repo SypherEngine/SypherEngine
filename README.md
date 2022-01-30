@@ -1,6 +1,15 @@
 <img src="https://github.com/SypherEngine/SypherEngine/blob/main/logos/SypherEngineBanner.svg">
 <h1 align="center"><strong>A Simple and Lightweight Java Game Engine</strong></h1>
 
+<div align="center">
+  <a href="https://github.com/SypherEngine/SypherEngine/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/SypherEngine/SypherEngine?style=for-the-badge"></a>
+  <a href="https://github.com/SypherEngine/SypherEngine/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SypherEngine/SypherEngine?style=for-the-badge"></a>
+  <a href="https://github.com/SypherEngine/SypherEngine/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/SypherEngine/SypherEngine?style=for-the-badge"></a>
+  <a href="https://discord.gg/NqEfyxVufP"><img alt="Discord" src="https://img.shields.io/discord/933650222347857971?style=for-the-badge"></a>
+</div>
+
+<br>
+
 <p align="center"><code>SypherEngine</code> is a simple game engine, made using pure Java, designed to be lightweight, fast and easy to use.</p> 
 
 <h3 align="center"><strong>Disclaimer</strong></h3> 
