@@ -3,6 +3,9 @@ package dev.aurumbyte.sypherengine.config;
 public class EngineConfig {
     String title;
     int width = 1280, height = 720;
+    public boolean showFPS;
+
+    float fixedUpdate;
 
     public void setTitle(String title) {
         this.title = title;
@@ -23,5 +26,17 @@ public class EngineConfig {
 
     public int getScreenWidth() {
         return width;
+    }
+
+    public void showFPSInTitle(boolean showFPS){
+        this.showFPS = showFPS;
+    }
+
+    public void setFixedUpdate(float fixedUpdate) {
+        this.fixedUpdate = fixedUpdate;
+    }
+
+    public float getFixedUpdate() {
+        return fixedUpdate;
     }
 }

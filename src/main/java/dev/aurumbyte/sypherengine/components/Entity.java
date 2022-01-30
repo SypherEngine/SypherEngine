@@ -1,10 +1,12 @@
 package dev.aurumbyte.sypherengine.components;
 
+import dev.aurumbyte.sypherengine.core.SypherEngine;
+import dev.aurumbyte.sypherengine.core.graphics.IRenderable;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 
-public abstract class Entity {
+public abstract class Entity implements IRenderable {
     Point2D position = new Point2D(0, 0);
     float rotation;
     float scale = 1;
@@ -16,7 +18,7 @@ public abstract class Entity {
 
     Rectangle2D boundary = new Rectangle2D(position.getX(), position.getY(), width, height);
 
-    public abstract void update(float deltaTime);
+    public abstract void update(SypherEngine engine, float deltaTime);
     public abstract void render(Renderer renderer);
 
     /* **********************************************************

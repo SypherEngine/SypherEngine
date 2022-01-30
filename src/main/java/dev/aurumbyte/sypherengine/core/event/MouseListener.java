@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class MouseListener {
     private int mouseX, mouseY;
-    private static Scene scene;
+    private Scene scene;
     private static final Set<MouseButton> buttonsDown = new HashSet<>();
 
     private MouseListener() {
@@ -31,20 +31,22 @@ public class MouseListener {
 
     private void removeCurrentKeyHandlers() {
         if (scene != null) {
-            MouseListener.scene.setOnMouseMoved(null);
-            MouseListener.scene.setOnMouseClicked(null);
+            this.scene.setOnMouseMoved(null);
+            this.scene.setOnMouseClicked(null);
         }
     }
 
     private void setScene(Scene scene) {
-        MouseListener.scene = scene;
-        MouseListener.scene.setOnMousePressed((mouseEvent -> {
+        this.scene = scene;
+        this.scene.setOnMousePressed((mouseEvent -> {
             buttonsDown.add(mouseEvent.getButton());
         }));
-        MouseListener.scene.setOnMouseReleased((mouseEvent -> {
+
+        this.scene.setOnMouseReleased((mouseEvent -> {
             buttonsDown.remove(mouseEvent.getButton());
         }));
-        MouseListener.scene.setOnMouseMoved((mouseEvent -> {
+
+        this.scene.setOnMouseMoved((mouseEvent -> {
             mouseX = (int)mouseEvent.getX();
             mouseY = (int)mouseEvent.getY();
         }));
@@ -64,6 +66,10 @@ public class MouseListener {
 
     public boolean isDown(MouseButton button) {
         return buttonsDown.contains(button);
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     @Override

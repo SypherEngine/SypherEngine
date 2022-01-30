@@ -1,5 +1,6 @@
 package dev.aurumbyte.sypherengine.components;
 
+import dev.aurumbyte.sypherengine.core.SypherEngine;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -17,7 +18,7 @@ public class Sprite2D extends Entity {
     }
 
     @Override
-    public void update(float deltaTime) {
+    public void update(SypherEngine engine, float deltaTime) {
 
     }
 

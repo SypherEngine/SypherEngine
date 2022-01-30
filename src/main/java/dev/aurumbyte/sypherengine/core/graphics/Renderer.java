@@ -2,23 +2,24 @@ package dev.aurumbyte.sypherengine.core.graphics;
 
 import dev.aurumbyte.sypherengine.components.Entity;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    Group group;
+    Pane pane;
     Scene scene;
     Canvas canvas;
     GraphicsContext graphicsContext;
@@ -28,8 +29,8 @@ public class Renderer {
     Color backgroundColor;
     Font defaultFont = Font.font("Poppins", FontWeight.NORMAL, 18);
 
-    public Renderer(Group group, Scene scene, Canvas canvas){
-        this.group = group;
+    public Renderer(Pane pane, Scene scene, Canvas canvas){
+        this.pane = pane;
         this.scene = scene;
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
@@ -61,7 +62,7 @@ public class Renderer {
         graphicsContext.restore();
     }
 
-    private void transformContext(Entity entity){
+    public void transformContext(Entity entity){
         Point2D centre = entity.getCenter();
         Rotate r = new Rotate(entity.getRotation(), centre.getX(), centre.getY());
         graphicsContext.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
@@ -83,7 +84,7 @@ public class Renderer {
         if(isFilled) rectangle.setFill(color);
         else rectangle.setStroke(color);
 
-        group.getChildren().add(rectangle);
+        pane.getChildren().add(rectangle);
     }
 
     public void drawCircle(int xPos, int yPos, int radius, boolean isFilled, Color color) {
@@ -95,7 +96,7 @@ public class Renderer {
         if(isFilled) circle.setFill(color);
         else circle.setStroke(color);
 
-        group.getChildren().add(circle);
+        pane.getChildren().add(circle);
     }
 
     public void drawImage(Image image, int xPos, int yPos, int width, int height) {
@@ -112,10 +113,15 @@ public class Renderer {
         );
     }
 
-    public void drawText(String text, int xPos, int yPos, Color color){
-        graphicsContext.setFill(color);
-        graphicsContext.setFont(defaultFont);
-        graphicsContext.fillText(text, xPos, yPos);
+    public void drawText(String textContent, int xPos, int yPos, Color color, Font font){
+        Text text = new Text();
+        text.setText(textContent);
+        text.setFill(color);
+        text.setX(xPos);
+        text.setY(yPos);
+        text.setFont(font);
+
+        pane.getChildren().add(text);
     }
 
     /*
