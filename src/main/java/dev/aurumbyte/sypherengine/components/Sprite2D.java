@@ -1,7 +1,7 @@
 package dev.aurumbyte.sypherengine.components;
 
-import dev.aurumbyte.sypherengine.core.SypherEngine;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
+import dev.aurumbyte.sypherengine.core.SypherEngine;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;

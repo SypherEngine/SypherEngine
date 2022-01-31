@@ -5,7 +5,7 @@ public class EngineConfig {
     int width = 1280, height = 720;
     public boolean showFPS;
 
-    float fixedUpdate;
+    float fixedUpdate = 60;
 
     public void setTitle(String title) {
         this.title = title;

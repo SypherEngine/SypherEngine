@@ -1,8 +1,8 @@
 package dev.aurumbyte.sypherengine.core.logic;
 
+import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.components.scene.Scene;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
-import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 
 public abstract class GameManager extends Scene {
     Scene currentScene = this;
