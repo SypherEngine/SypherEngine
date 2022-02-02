@@ -60,4 +60,4 @@ public static void methodName(String param1, int param2) {
 ```
 git clone https://github.com/SypherEngine/SypherEngine.git
 ```
-- Build the engine using `mvn clean build` 
+- Build the engine using `mvn clean package` 
