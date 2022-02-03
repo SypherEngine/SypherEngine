@@ -56,17 +56,17 @@ public class Main extends GameManager {
 
   //These can be left blank for this simple hello world program
   @Override
-  public void init(){
+  public void init(SypherEngine engine){
     //init your game
   }
   
   @Override
-  public void update(SypherEngine engine, float deltaTime){
+  public void update(SypherEngine engine){
     //updating
   }
 
   @Override
-  public void render(Renderer renderer){
+  public void render(SypherEngine engine){
     //rendering
   }
 
