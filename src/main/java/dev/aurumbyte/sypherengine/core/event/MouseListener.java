@@ -12,9 +12,6 @@ public class MouseListener {
     private Scene scene;
     private static final Set<MouseButton> buttonsDown = new HashSet<>();
 
-    private MouseListener() {
-    }
-
     public static MouseListener getInstance() {
         return new MouseListener();
     }

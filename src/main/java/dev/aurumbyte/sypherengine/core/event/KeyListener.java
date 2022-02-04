@@ -10,8 +10,8 @@ public class KeyListener {
     private static Scene scene;
     private static final Set<KeyCode> keysDown = new HashSet<>();
 
-    private KeyListener() {
-    }
+    int xDirection = 0;
+    int yDirection = 0;
 
     public static KeyListener getInstance() {
         return new KeyListener();
@@ -46,6 +46,42 @@ public class KeyListener {
 
     public boolean isDown(KeyCode keyCode) {
         return keysDown.contains(keyCode);
+    }
+
+    public boolean horizontalAxis(){
+        if(isDown(KeyCode.LEFT) || isDown(KeyCode.A)) {
+            xDirection = -1;
+            return true;
+        }
+
+        else if(isDown(KeyCode.RIGHT) || isDown(KeyCode.D)) {
+            xDirection = 1;
+            return true;
+        }
+
+        else return false;
+    }
+
+    public boolean verticalAxis(){
+        if(isDown(KeyCode.UP) || isDown(KeyCode.W)) {
+            yDirection = -1;
+            return true;
+        }
+
+        else if(isDown(KeyCode.DOWN) || isDown(KeyCode.S)) {
+            yDirection = 1;
+            return true;
+        }
+
+        else return false;
+    }
+
+    public int getHorizontalVector() {
+        return xDirection;
+    }
+
+    public int getVerticalVector() {
+        return yDirection;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package dev.aurumbyte.sypherengine.ui;
 
-import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -29,7 +28,7 @@ public class Button extends UIElement {
     }
 
     @Override
-    public void update(SypherEngine engine, float deltaTime) {
+    public void update(SypherEngine engine) {
         switch (buttonShape) {
             case RECTANGLE -> {
                 Point2D mousePos = engine.mouseListener.getMousePos();
@@ -48,23 +47,23 @@ public class Button extends UIElement {
     }
 
     @Override
-    public void render(Renderer renderer) {
+    public void render(SypherEngine engine) {
         switch (buttonShape) {
             case RECTANGLE -> {
                 if(buttonGraphics == null) {
-                    renderer.drawRectangle(xPos, yPos, width, height, true, color != null ? color : defaultColor);
-                    renderer.drawText(buttonText,
+                    engine.getRenderer().drawRectangle(xPos, yPos, width, height, true, color != null ? color : defaultColor);
+                    engine.getRenderer().drawText(buttonText,
                             xPos,
                             yPos + height / 2,
                             textColor != null ? textColor : defaultTextColour,
                             font != null ? font : defaultFont
                     );
                 } else {
-                    if(hoverEvent) renderer.drawImage(buttonGraphicsOnHover, xPos, yPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
-                    renderer.drawImage(buttonGraphics, xPos, yPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
+                    if(hoverEvent) engine.getRenderer().drawImage(buttonGraphicsOnHover, xPos, yPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
+                    engine.getRenderer().drawImage(buttonGraphics, xPos, yPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
                 }
             }
-            case CIRCLE -> renderer.drawCircle(xPos, yPos, radius, true, color != null ? color : defaultColor);
+            case CIRCLE -> engine.getRenderer().drawCircle(xPos, yPos, radius, true, color != null ? color : defaultColor);
         }
     }
 

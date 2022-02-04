@@ -1,6 +1,5 @@
 package dev.aurumbyte.sypherengine.core.logic;
 
-import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.components.scene.Scene;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
 
@@ -12,27 +11,31 @@ public abstract class GameManager extends Scene {
         currentScene.init(engine);
     }
 
-    public void gameUpdate(SypherEngine engine, float deltaTime){
+    public void gameUpdate(SypherEngine engine) {
+        currentScene.update(engine);
+
         currentScene.entities.forEach(entity -> {
             if(entity.isDead()) currentScene.entities.remove(entity);
-            entity.update(engine, deltaTime);
+            entity.update(engine);
         });
 
-        currentScene.update(engine, deltaTime);
+        currentScene.renderables.forEach(iRenderable -> iRenderable.update(engine));
     }
 
-    public void gameRender(Renderer renderer){
+    public void gameRender(SypherEngine engine){
+        currentScene.render(engine);
+
         currentScene.entities.forEach(entity -> {
-            renderer.transformContext(entity);
-            entity.render(renderer);
+            engine.getRenderer().transformContext(entity);
+            entity.render(engine);
         });
 
-        currentScene.render(renderer);
+        currentScene.renderables.forEach(iRenderable -> iRenderable.render(engine));
     }
 
     public abstract void init(SypherEngine engine);
-    public abstract void update(SypherEngine engine, float deltaTime);
-    public abstract void render(Renderer renderer);
+    public abstract void update(SypherEngine engine);
+    public abstract void render(SypherEngine engine);
 
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;

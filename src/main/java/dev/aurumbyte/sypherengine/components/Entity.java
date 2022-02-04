@@ -1,7 +1,6 @@
 package dev.aurumbyte.sypherengine.components;
 
 import dev.aurumbyte.sypherengine.core.graphics.IRenderable;
-import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -10,26 +9,47 @@ public abstract class Entity implements IRenderable {
     Point2D position = new Point2D(0, 0);
     float rotation;
     float scale = 1;
-    double width;
-    double height;
+    public double width;
+    public double height;
+
+    public double xPos = 0, yPos = 0;
+    double boundaryX = xPos, boundaryY = yPos;
+
     Object entityRenderable;
 
     boolean isDead = false;
 
-    Rectangle2D boundary = new Rectangle2D(position.getX(), position.getY(), width, height);
+    Rectangle2D boundary;
 
-    public abstract void update(SypherEngine engine, float deltaTime);
-    public abstract void render(Renderer renderer);
+    public abstract void update(SypherEngine engine);
+    public abstract void render(SypherEngine engine);
 
     /* **********************************************************
-     *                           POSITION                                     *
-     ************************************************************ */
+     *                           MISC                           *
+     ************************************************************/
     public Point2D getDrawPosition() {
-        return position;
+        return new Point2D(xPos, yPos);
     }
 
     public void setDrawPosition(float x, float y) {
-        this.position = new Point2D(x, y);
+        this.xPos = x;
+        this.yPos = y;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setBoundary(Rectangle2D boundary) {
+        this.boundary = boundary;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
     private void rotate(float rotation) {
@@ -77,7 +97,24 @@ public abstract class Entity implements IRenderable {
         return boundary;
     }
 
-    public boolean isIntersectingWith(Sprite2D sprite2D){
-        return sprite2D.getBoundary().intersects(this.getBoundary());
+    public void setBoundaryPos(int xPos, int yPos){
+        this.boundaryX = xPos;
+        this.boundaryY = yPos;
+    }
+
+    public void setBoundary(int xPos, int yPos, int width, int height){
+        this.boundary = new Rectangle2D(xPos, yPos, width, height);
+    }
+
+    public double getBoundaryX() {
+        return boundaryX;
+    }
+
+    public double getBoundaryY() {
+        return boundaryY;
+    }
+
+    public boolean collidesWith(Entity entity){
+        return entity.getBoundary().intersects(this.getBoundary());
     }
 }

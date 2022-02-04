@@ -46,12 +46,51 @@ public static void methodName(String param1, int param2) {
 }
 ```
 
+#### Long conditions
+```java
+if(condition1 //could be longer, i just used "condition1..." for brevity
+&& condition2 
+|| condition3 
+|| something > anotherthing)
+{
+  //code here
+}
+```
+
+#### Multiple Arguments / Long Arguments
+```java
+//actual working code as an example (drawing a square to center of the screen (almost))
+
+engine.getRenderer().drawRectangle(
+  engine.getRenderer().getScreenCenter().getX(),
+  engine.getRenderer().getScreenCenter().getY(),
+  50,
+  50,
+  true //fill in the square
+  Color.BLUE
+);
+```
+
+### Switch statements
+```java
+//use the new enhanced switch cases in Java
+switch(something){
+  case FIRSTCASE -> one line; //if return statement or direct break
+  case NEXTCASE -> {
+    //multiple statements
+  }
+}
+```
+
+> Tabs are 4 spaces
+
 #### Naming
 
  - Methods : camelCase
  - Fields : camelCase
  - Variables : camelCase
  - Classes : PascalCase
+ - Enum members : ALLCAPS or ALL_CAPS_SNAKE_CASE
  - Final Variables : ALLCAPS or ALL_CAPS_SNAKE_CASE
 
 ## Setting up SypherEngine for development

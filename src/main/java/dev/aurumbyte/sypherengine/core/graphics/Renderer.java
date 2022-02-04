@@ -2,11 +2,11 @@ package dev.aurumbyte.sypherengine.core.graphics;
 
 import dev.aurumbyte.sypherengine.components.Entity;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    Pane pane;
+    Group group;
     Scene scene;
     Canvas canvas;
     GraphicsContext graphicsContext;
@@ -29,16 +29,15 @@ public class Renderer {
     Color backgroundColor;
     Font defaultFont = Font.font("Poppins", FontWeight.NORMAL, 18);
 
-    public Renderer(Pane pane, Scene scene, Canvas canvas){
-        this.pane = pane;
+    public Renderer(Group group, Scene scene, Canvas canvas){
+        this.group = group;
         this.scene = scene;
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
     }
 
     public void clear(){
-        graphicsContext.setFill( backgroundColor != null ? backgroundColor : new Color(0, 0, 0, 0) );
-        graphicsContext.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
+        group.getChildren().clear();
     }
 
     public void addEntities(List<Entity> entityList){
@@ -47,19 +46,6 @@ public class Renderer {
 
     public void addEntity(Entity entity){
         entities.add(entity);
-    }
-
-    public void renderEntities() {
-        graphicsContext.save();
-
-        if(background != null) graphicsContext.drawImage(background, 0, 0);
-
-        entities.forEach(entity -> {
-            transformContext(entity);
-            entity.render(this);
-        });
-
-        graphicsContext.restore();
     }
 
     public void transformContext(Entity entity){
@@ -84,7 +70,7 @@ public class Renderer {
         if(isFilled) rectangle.setFill(color);
         else rectangle.setStroke(color);
 
-        pane.getChildren().add(rectangle);
+        group.getChildren().add(rectangle);
     }
 
     public void drawCircle(int xPos, int yPos, int radius, boolean isFilled, Color color) {
@@ -96,7 +82,7 @@ public class Renderer {
         if(isFilled) circle.setFill(color);
         else circle.setStroke(color);
 
-        pane.getChildren().add(circle);
+        group.getChildren().add(circle);
     }
 
     public void drawImage(Image image, int xPos, int yPos, int width, int height) {
@@ -121,7 +107,7 @@ public class Renderer {
         text.setY(yPos);
         text.setFont(font);
 
-        pane.getChildren().add(text);
+        group.getChildren().add(text);
     }
 
     /*
