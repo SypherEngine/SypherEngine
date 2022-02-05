@@ -4,8 +4,6 @@ module SypherEngine {
     requires javafx.media;
     requires java.desktop;
 
-    exports dev.aurumbyte.sypherengine;
-
     exports dev.aurumbyte.sypherengine.core;
     exports dev.aurumbyte.sypherengine.core.graphics;
     exports dev.aurumbyte.sypherengine.core.audio;
