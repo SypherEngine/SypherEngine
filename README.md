@@ -54,17 +54,17 @@ If you do, then include the engine into your project as follows
 ### Maven
 ```xml
 <repositories>
-  <repository>
-	  <id>jitpack.io</id>
+	<repository>	
+		<id>jitpack.io</id>
 		<url>https://jitpack.io</url>
 	</repository>
 </repositories>
 
 <!--In <dependencies>-->
 <dependency>
-  <groupId>com.github.SypherEngine</groupId>
-  <artifactId>SypherEngine</artifactId>
-  <version>Tag</version>
+  	<groupId>com.github.SypherEngine</groupId>
+  	<artifactId>SypherEngine</artifactId>
+  	<version>Tag</version>
 </dependency>
 ```
 
@@ -88,19 +88,13 @@ public class Main extends GameManager {
 
   //These can be left blank for this simple hello world program
   @Override
-  public void init(SypherEngine engine){
-    //init your game
-  }
+  public void init(SypherEngine engine){}
   
   @Override
-  public void update(SypherEngine engine){
-    //updating
-  }
+  public void update(SypherEngine engine){}
 
   @Override
-  public void render(SypherEngine engine){
-    //rendering
-  }
+  public void render(SypherEngine engine){}
 
   public static void main(String[] args){
     SypherEngine.init(new Main());
