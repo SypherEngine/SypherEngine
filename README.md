@@ -32,14 +32,45 @@ To use `SypherEngine`, please do make sure that you have the following requireme
 - Java 17 or greater
 - Maven
 
-<!--
 If you do, then include the engine into your project as follows
+
+### Gradle
+```groovy
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+
+
+	dependencies {
+	        implementation 'com.github.SypherEngine:SypherEngine:Tag'
+	}
+
+```
 
 ### Maven
 ```xml
+<repositories>
+	<repository>	
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
+</repositories>
 
+<!--In <dependencies>-->
+<dependency>
+  	<groupId>com.github.SypherEngine</groupId>
+  	<artifactId>SypherEngine</artifactId>
+  	<version>Tag</version>
+</dependency>
 ```
--->
+
+The `Tag` is just the release tag.
+
+### From Source
 
 After downloading the source, build the engine, using `mvn clean package`.
 
@@ -57,19 +88,13 @@ public class Main extends GameManager {
 
   //These can be left blank for this simple hello world program
   @Override
-  public void init(SypherEngine engine){
-    //init your game
-  }
+  public void init(SypherEngine engine){}
   
   @Override
-  public void update(SypherEngine engine){
-    //updating
-  }
+  public void update(SypherEngine engine){}
 
   @Override
-  public void render(SypherEngine engine){
-    //rendering
-  }
+  public void render(SypherEngine engine){}
 
   public static void main(String[] args){
     SypherEngine.init(new Main());
