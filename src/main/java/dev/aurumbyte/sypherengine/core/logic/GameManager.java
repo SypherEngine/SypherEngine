@@ -26,8 +26,10 @@ public abstract class GameManager extends Scene {
         currentScene.render(engine);
 
         currentScene.entities.forEach(entity -> {
+            engine.getRenderer().getGraphicsContext().save();
             engine.getRenderer().transformContext(entity);
             entity.render(engine);
+            engine.getRenderer().getGraphicsContext().restore();
         });
 
         currentScene.renderables.forEach(iRenderable -> iRenderable.render(engine));

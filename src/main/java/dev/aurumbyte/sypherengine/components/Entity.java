@@ -7,7 +7,7 @@ import javafx.geometry.Rectangle2D;
 
 public abstract class Entity implements IRenderable {
     Point2D position = new Point2D(0, 0);
-    float rotation;
+    public float rotation;
     float scale = 1;
     public double width;
     public double height;
@@ -52,12 +52,12 @@ public abstract class Entity implements IRenderable {
         this.scale = scale;
     }
 
-    private void rotate(float rotation) {
+    public void rotate(float rotation) {
         this.rotation += rotation;
     }
 
-    private void move(Point2D vector) {
-        this.position = this.position.add(vector);
+    public void move(Point2D vector) {
+        setDrawPosition((float) (this.position.getX() + vector.getX()), (float) (this.position.getY() + vector.getY()));
     }
 
     public float getRotation() {

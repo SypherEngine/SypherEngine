@@ -26,7 +26,7 @@ public class Renderer {
     List<Entity> entities = new ArrayList<>();
 
     Image background;
-    Color backgroundColor;
+    Color backgroundColor = Color.WHITE;
     Font defaultFont = Font.font("Poppins", FontWeight.NORMAL, 18);
 
     public Renderer(Group group, Scene scene, Canvas canvas){
@@ -38,6 +38,8 @@ public class Renderer {
 
     public void clear(){
         group.getChildren().clear();
+        graphicsContext.setFill(backgroundColor);
+        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     public void addEntities(List<Entity> entityList){

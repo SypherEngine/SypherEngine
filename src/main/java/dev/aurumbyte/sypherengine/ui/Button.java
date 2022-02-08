@@ -51,6 +51,16 @@ public class Button extends UIElement {
         switch (buttonShape) {
             case RECTANGLE -> {
                 if(buttonGraphics == null) {
+                    if(hoverEvent){
+                        engine.getRenderer().drawRectangle(xPos, yPos, width, height, true, color != null ? color.darker() : defaultColor.darker());
+                        engine.getRenderer().drawText(buttonText,
+                                xPos + width / 2,
+                                yPos + height / 2,
+                                textColor != null ? textColor : defaultTextColour,
+                                font != null ? font : defaultFont
+                        );
+                    }
+
                     engine.getRenderer().drawRectangle(xPos, yPos, width, height, true, color != null ? color : defaultColor);
                     engine.getRenderer().drawText(buttonText,
                             xPos,

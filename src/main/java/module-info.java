@@ -1,6 +1,7 @@
 module SypherEngine {
-    requires javafx.controls;
     requires transitive javafx.fxml;
+
+    requires javafx.controls;
     requires javafx.media;
     requires java.desktop;
 
