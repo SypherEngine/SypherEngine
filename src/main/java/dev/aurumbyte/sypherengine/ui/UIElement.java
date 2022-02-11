@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public abstract class UIElement extends Entity {
-    int xPos, yPos, width, height, radius;
+    int radius;
 
     Color color;
     Color defaultColor = Color.BEIGE;

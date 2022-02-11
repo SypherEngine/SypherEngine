@@ -17,6 +17,8 @@ module SypherEngine {
 
     exports dev.aurumbyte.sypherengine.config;
 
+    exports dev.aurumbyte.sypherengine.math;
+
     exports dev.aurumbyte.sypherengine.logging;
     exports dev.aurumbyte.sypherengine.logging.logUtils;
 }

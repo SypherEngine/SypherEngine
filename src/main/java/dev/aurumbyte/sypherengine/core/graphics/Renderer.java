@@ -1,6 +1,7 @@
 package dev.aurumbyte.sypherengine.core.graphics;
 
 import dev.aurumbyte.sypherengine.components.Entity;
+import dev.aurumbyte.sypherengine.math.Vector2;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -51,8 +52,8 @@ public class Renderer {
     }
 
     public void transformContext(Entity entity){
-        Point2D centre = entity.getCenter();
-        Rotate r = new Rotate(entity.getRotation(), centre.getX(), centre.getY());
+        Vector2 centre = entity.getCenter();
+        Rotate r = new Rotate(entity.getRotation(), centre.xPos, centre.yPos);
         graphicsContext.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
     }
 
@@ -62,12 +63,15 @@ public class Renderer {
      * =======================================================================
      */
 
-    public void drawRectangle(int xPos, int yPos, int width, int height, boolean isFilled, Color color) {
+    public void drawRectangle(Vector2 position, int width, int height, boolean isFilled, Color color) {
         Rectangle rectangle = new Rectangle();
-        rectangle.setX(xPos);
-        rectangle.setY(yPos);
+
+        rectangle.setX(position.xPos);
+        rectangle.setY(position.yPos);
         rectangle.setWidth(width);
         rectangle.setHeight(height);
+
+        rectangle.setRotate(position.getRotation());
 
         if(isFilled) rectangle.setFill(color);
         else rectangle.setStroke(color);
@@ -75,11 +79,12 @@ public class Renderer {
         group.getChildren().add(rectangle);
     }
 
-    public void drawCircle(int xPos, int yPos, int radius, boolean isFilled, Color color) {
+    public void drawCircle(Vector2 position, int radius, boolean isFilled, Color color) {
         Circle circle = new Circle();
-        circle.setCenterX(xPos);
-        circle.setCenterY(yPos);
+        circle.setCenterX(position.xPos);
+        circle.setCenterY(position.yPos);
         circle.setRadius(radius);
+        circle.setRotate(position.getRotation());
 
         if(isFilled) circle.setFill(color);
         else circle.setStroke(color);
@@ -87,27 +92,28 @@ public class Renderer {
         group.getChildren().add(circle);
     }
 
-    public void drawImage(Image image, int xPos, int yPos, int width, int height) {
-        graphicsContext.drawImage(image, xPos, yPos, width, height);
+    public void drawImage(Image image, Vector2 position, int width, int height) {
+        graphicsContext.drawImage(image, position.xPos, position.yPos, width, height);
     }
 
-    public void drawImageTile(ImageTile imageTile, int xPos, int yPos, int tileX, int tileY){
+    public void drawImageTile(ImageTile imageTile, Vector2 position, int tileX, int tileY){
         graphicsContext.drawImage(
                 imageTile.getImageTile(tileX, tileY),
-                xPos,
-                yPos,
+                position.xPos,
+                position.yPos,
                 imageTile.getTileWidth(),
                 imageTile.getTileHeight()
         );
     }
 
-    public void drawText(String textContent, int xPos, int yPos, Color color, Font font){
+    public void drawText(String textContent, Vector2 position, Color color, Font font){
         Text text = new Text();
         text.setText(textContent);
         text.setFill(color);
-        text.setX(xPos);
-        text.setY(yPos);
+        text.setX(position.xPos);
+        text.setY(position.yPos);
         text.setFont(font);
+        text.setRotate(position.getRotation());
 
         group.getChildren().add(text);
     }

@@ -1,19 +1,18 @@
 package dev.aurumbyte.sypherengine.components;
 
-import dev.aurumbyte.sypherengine.core.graphics.IRenderable;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
-import javafx.geometry.Point2D;
+import dev.aurumbyte.sypherengine.core.graphics.IRenderable;
+import dev.aurumbyte.sypherengine.math.Vector2;
 import javafx.geometry.Rectangle2D;
 
 public abstract class Entity implements IRenderable {
-    Point2D position = new Point2D(0, 0);
+    Vector2 position = new Vector2();
     public float rotation;
     float scale = 1;
     public double width;
     public double height;
 
-    public double xPos = 0, yPos = 0;
-    double boundaryX = xPos, boundaryY = yPos;
+    double boundaryX = position.xPos, boundaryY = position.yPos;
 
     Object entityRenderable;
 
@@ -27,13 +26,12 @@ public abstract class Entity implements IRenderable {
     /* **********************************************************
      *                           MISC                           *
      ************************************************************/
-    public Point2D getDrawPosition() {
-        return new Point2D(xPos, yPos);
+    public Vector2 getDrawPosition() {
+        return position;
     }
 
     public void setDrawPosition(float x, float y) {
-        this.xPos = x;
-        this.yPos = y;
+        this.position.setPosition(x, y);
     }
 
     public void setHeight(double height) {
@@ -56,10 +54,6 @@ public abstract class Entity implements IRenderable {
         this.rotation += rotation;
     }
 
-    public void move(Point2D vector) {
-        setDrawPosition((float) (this.position.getX() + vector.getX()), (float) (this.position.getY() + vector.getY()));
-    }
-
     public float getRotation() {
         return rotation;
     }
@@ -68,9 +62,9 @@ public abstract class Entity implements IRenderable {
         return scale;
     }
 
-    public Point2D getCenter() {
-        Point2D pos = getDrawPosition();
-        return new Point2D(pos.getX() + width / 2, pos.getY() + height / 2);
+    public Vector2 getCenter() {
+        Vector2 pos = getDrawPosition();
+        return new Vector2((float)(pos.xPos + width / 2), (float)(pos.yPos + height / 2));
     }
 
     public Object getEntityRenderable() {
@@ -102,8 +96,8 @@ public abstract class Entity implements IRenderable {
         this.boundaryY = yPos;
     }
 
-    public void setBoundary(int xPos, int yPos, int width, int height){
-        this.boundary = new Rectangle2D(xPos, yPos, width, height);
+    public void setBoundary(Vector2 position, int width, int height){
+        this.boundary = new Rectangle2D(position.xPos, position.yPos, width, height);
     }
 
     public double getBoundaryX() {
