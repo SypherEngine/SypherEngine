@@ -9,12 +9,10 @@ public class Sprite2D extends Entity {
     Image image;
 
     public Sprite2D(Image spriteImage, int xPos, int yPos){
-        this.entityRenderable = spriteImage;
         this.image = spriteImage;
         this.position = new Vector2(xPos, yPos);
         this.width = spriteImage.getWidth();
         this.height = spriteImage.getHeight();
-        this.boundary = new Rectangle2D(xPos, yPos, spriteImage.getWidth(), spriteImage.getHeight());
     }
 
     @Override

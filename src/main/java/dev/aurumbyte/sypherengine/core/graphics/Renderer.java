@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -63,7 +64,7 @@ public class Renderer {
      * =======================================================================
      */
 
-    public void drawRectangle(Vector2 position, int width, int height, boolean isFilled, Color color) {
+    public void drawRectangle(Vector2 position, int width, int height, boolean isFilled, Paint paint) {
         Rectangle rectangle = new Rectangle();
 
         rectangle.setX(position.xPos);
@@ -73,21 +74,21 @@ public class Renderer {
 
         rectangle.setRotate(position.getRotation());
 
-        if(isFilled) rectangle.setFill(color);
-        else rectangle.setStroke(color);
+        if(isFilled) rectangle.setFill(paint);
+        else rectangle.setStroke(paint);
 
         group.getChildren().add(rectangle);
     }
 
-    public void drawCircle(Vector2 position, int radius, boolean isFilled, Color color) {
+    public void drawCircle(Vector2 position, int radius, boolean isFilled, Paint paint) {
         Circle circle = new Circle();
         circle.setCenterX(position.xPos);
         circle.setCenterY(position.yPos);
         circle.setRadius(radius);
         circle.setRotate(position.getRotation());
 
-        if(isFilled) circle.setFill(color);
-        else circle.setStroke(color);
+        if(isFilled) circle.setFill(paint);
+        else circle.setStroke(paint);
 
         group.getChildren().add(circle);
     }
@@ -106,10 +107,10 @@ public class Renderer {
         );
     }
 
-    public void drawText(String textContent, Vector2 position, Color color, Font font){
+    public void drawText(String textContent, Vector2 position, Paint paint, Font font){
         Text text = new Text();
         text.setText(textContent);
-        text.setFill(color);
+        text.setFill(paint);
         text.setX(position.xPos);
         text.setY(position.yPos);
         text.setFont(font);

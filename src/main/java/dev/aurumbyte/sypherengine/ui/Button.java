@@ -2,7 +2,6 @@ package dev.aurumbyte.sypherengine.ui;
 
 import dev.aurumbyte.sypherengine.core.SypherEngine;
 import dev.aurumbyte.sypherengine.math.Vector2;
-
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;

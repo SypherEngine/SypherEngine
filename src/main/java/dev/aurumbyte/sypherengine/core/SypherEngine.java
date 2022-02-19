@@ -102,7 +102,7 @@ public class SypherEngine extends Application {
     public static void init(GameManager game, EngineConfig config){
         SypherEngine.game = game;
         SypherEngine.fixedUpdate = config.getFixedUpdate();
-        SypherEngine.title = config.getTitle() + (config.showFPS ? " | FPS: " + SypherEngine.fps : "");
+        SypherEngine.title = config.getTitle();
         SypherEngine.width = config.getScreenWidth();
         SypherEngine.height = config.getScreenHeight();
 

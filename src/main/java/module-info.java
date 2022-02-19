@@ -1,4 +1,4 @@
-module SypherEngine {
+module sypherengine {
     requires transitive javafx.fxml;
 
     requires javafx.controls;
@@ -7,6 +7,7 @@ module SypherEngine {
 
     exports dev.aurumbyte.sypherengine.core;
     exports dev.aurumbyte.sypherengine.core.graphics;
+    exports dev.aurumbyte.sypherengine.core.graphics.gradients;
     exports dev.aurumbyte.sypherengine.core.audio;
     exports dev.aurumbyte.sypherengine.core.logic;
     exports dev.aurumbyte.sypherengine.core.event;

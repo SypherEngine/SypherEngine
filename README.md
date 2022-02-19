@@ -72,10 +72,7 @@ The `Tag` is just the release tag.
 
 ### From Source
 
-After downloading the source, build the engine, using `mvn clean package`.
-
-#### Don't want to build it yourself?
-There is a pre-built binary of SypherEngine in the releases tab. Use `SypherEngine-<version>.jar` if you have a JavaFX project set up, or you can use `SypherEngine-<version>-jar-with-dependencies.jar` for a regular project (as it comes built with the SypherEngine dependencies).
+After downloading the source, build the engine, using `gradle build`.
 
 Add it to your project classpath to start developing!
 

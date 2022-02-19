@@ -1,9 +1,10 @@
 package dev.aurumbyte.sypherengine.config;
 
+import dev.aurumbyte.sypherengine.math.Vector2;
+
 public class EngineConfig {
     String title;
     int width = 1280, height = 720;
-    public boolean showFPS;
 
     float fixedUpdate = 60;
 
@@ -11,7 +12,7 @@ public class EngineConfig {
         this.title = title;
     }
 
-    public void setScreenResolution(int width, int height){
+    public void setWindowResolution(int width, int height){
         this.width = width;
         this.height = height;
     }
@@ -28,15 +29,15 @@ public class EngineConfig {
         return width;
     }
 
-    public void showFPSInTitle(boolean showFPS){
-        this.showFPS = showFPS;
-    }
-
     public void setFixedUpdate(float fixedUpdate) {
         this.fixedUpdate = fixedUpdate;
     }
 
     public float getFixedUpdate() {
         return fixedUpdate;
+    }
+
+    public Vector2 getWindowResolution(){
+        return new Vector2(width, height);
     }
 }

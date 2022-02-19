@@ -12,13 +12,9 @@ public abstract class Entity implements IRenderable {
     public double width;
     public double height;
 
-    double boundaryX = position.xPos, boundaryY = position.yPos;
-
-    Object entityRenderable;
-
     boolean isDead = false;
 
-    Rectangle2D boundary;
+    AABB boundingBox = new AABB(this);
 
     public abstract void update(SypherEngine engine);
     public abstract void render(SypherEngine engine);
@@ -42,10 +38,6 @@ public abstract class Entity implements IRenderable {
         this.width = width;
     }
 
-    public void setBoundary(Rectangle2D boundary) {
-        this.boundary = boundary;
-    }
-
     public void setScale(float scale) {
         this.scale = scale;
     }
@@ -67,10 +59,6 @@ public abstract class Entity implements IRenderable {
         return new Vector2((float)(pos.xPos + width / 2), (float)(pos.yPos + height / 2));
     }
 
-    public Object getEntityRenderable() {
-        return entityRenderable;
-    }
-
     public double getWidth() {
         return this.width * getScale();
     }
@@ -87,28 +75,7 @@ public abstract class Entity implements IRenderable {
         isDead = dead;
     }
 
-    public Rectangle2D getBoundary() {
-        return boundary;
-    }
-
-    public void setBoundaryPos(int xPos, int yPos){
-        this.boundaryX = xPos;
-        this.boundaryY = yPos;
-    }
-
-    public void setBoundary(Vector2 position, int width, int height){
-        this.boundary = new Rectangle2D(position.xPos, position.yPos, width, height);
-    }
-
-    public double getBoundaryX() {
-        return boundaryX;
-    }
-
-    public double getBoundaryY() {
-        return boundaryY;
-    }
-
-    public boolean collidesWith(Entity entity){
-        return entity.getBoundary().intersects(this.getBoundary());
+    public Rectangle2D getBoundingBox(){
+        return null;
     }
 }
