@@ -72,7 +72,7 @@ The `Tag` is just the release tag.
 
 ### From Source
 
-After downloading the source, build the engine, using `gradle build`.
+After downloading the source, build the engine, using `mvn clean package`.
 
 Add it to your project classpath to start developing!
 
