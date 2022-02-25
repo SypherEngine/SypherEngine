@@ -1,3 +1,4 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.config;
 
 import dev.aurumbyte.sypherengine.math.Vector2;
@@ -12,7 +13,7 @@ public class EngineConfig {
         this.title = title;
     }
 
-    public void setWindowResolution(int width, int height){
+    public void setWindowResolution(int width, int height) {
         this.width = width;
         this.height = height;
     }
@@ -37,7 +38,7 @@ public class EngineConfig {
         return fixedUpdate;
     }
 
-    public Vector2 getWindowResolution(){
+    public Vector2 getWindowResolution() {
         return new Vector2(width, height);
     }
 }

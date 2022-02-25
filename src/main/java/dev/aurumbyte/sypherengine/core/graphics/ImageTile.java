@@ -1,3 +1,4 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.graphics;
 
 import javafx.scene.image.Image;
@@ -8,19 +9,19 @@ public class ImageTile {
     Image image;
     int tileWidth, tileHeight;
 
-    public ImageTile(Image image, int tileWidth, int tileHeight){
+    public ImageTile(Image image, int tileWidth, int tileHeight) {
         this.image = image;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
     }
 
-    public ImageTile(String path, int tileWidth, int tileHeight){
+    public ImageTile(String path, int tileWidth, int tileHeight) {
         this.image = new Image(path);
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
     }
 
-    public Image getImageTile(int tileX, int tileY){
+    public Image getImageTile(int tileX, int tileY) {
         PixelReader reader = image.getPixelReader();
         return new WritableImage(reader, tileX * tileWidth, tileY * tileHeight, tileWidth, tileHeight);
     }

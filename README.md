@@ -1,4 +1,4 @@
-<img src="https://github.com/SypherEngine/SypherEngine/blob/main/logos/SypherEngineBanner.svg">
+<img src="https://github.com/SypherEngine/SypherEngine/blob/dev/media/branding/SypherEngineBanner.svg">
 <h1 align="center"><strong>A Simple and Lightweight Java Game Engine</strong></h1>
 
 <div align="center">
@@ -72,7 +72,7 @@ The `Tag` is just the release tag.
 
 ### From Source
 
-After downloading the source, build the engine, using `gradle build`.
+After downloading the source, build the engine, using `mvn clean package`.
 
 Add it to your project classpath to start developing!
 

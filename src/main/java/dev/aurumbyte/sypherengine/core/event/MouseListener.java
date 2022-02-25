@@ -1,11 +1,11 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.event;
-
-import javafx.geometry.Point2D;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 
 import java.util.HashSet;
 import java.util.Set;
+import javafx.geometry.Point2D;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 
 public class MouseListener {
     private int mouseX, mouseY;
@@ -44,12 +44,12 @@ public class MouseListener {
         }));
 
         this.scene.setOnMouseMoved((mouseEvent -> {
-            mouseX = (int)mouseEvent.getX();
-            mouseY = (int)mouseEvent.getY();
+            mouseX = (int) mouseEvent.getX();
+            mouseY = (int) mouseEvent.getY();
         }));
     }
 
-    public Point2D getMousePos(){
+    public Point2D getMousePos() {
         return new Point2D(mouseX, mouseY);
     }
 
@@ -71,7 +71,8 @@ public class MouseListener {
 
     @Override
     public String toString() {
-        StringBuilder buttons = new StringBuilder("MouseListener on scene (").append(scene).append(")");
+        StringBuilder buttons =
+                new StringBuilder("MouseListener on scene (").append(scene).append(")");
         for (MouseButton button : buttonsDown) {
             buttons.append(button.toString()).append(" ");
         }

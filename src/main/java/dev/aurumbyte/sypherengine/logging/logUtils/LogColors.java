@@ -1,6 +1,8 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.logging.logUtils;
 
-public enum LogColors {;
+public enum LogColors {
+    ;
     public static final String RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";

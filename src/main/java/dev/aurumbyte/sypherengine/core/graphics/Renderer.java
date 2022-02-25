@@ -1,7 +1,10 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.graphics;
 
 import dev.aurumbyte.sypherengine.components.Entity;
 import dev.aurumbyte.sypherengine.math.Vector2;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,9 +20,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Renderer {
     Group group;
     Scene scene;
@@ -31,28 +31,28 @@ public class Renderer {
     Color backgroundColor = Color.WHITE;
     Font defaultFont = Font.font("Poppins", FontWeight.NORMAL, 18);
 
-    public Renderer(Group group, Scene scene, Canvas canvas){
+    public Renderer(Group group, Scene scene, Canvas canvas) {
         this.group = group;
         this.scene = scene;
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
     }
 
-    public void clear(){
+    public void clear() {
         group.getChildren().clear();
         graphicsContext.setFill(backgroundColor);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-    public void addEntities(List<Entity> entityList){
+    public void addEntities(List<Entity> entityList) {
         entities.addAll(entityList);
     }
 
-    public void addEntity(Entity entity){
+    public void addEntity(Entity entity) {
         entities.add(entity);
     }
 
-    public void transformContext(Entity entity){
+    public void transformContext(Entity entity) {
         Vector2 centre = entity.getCenter();
         Rotate r = new Rotate(entity.getRotation(), centre.xPos, centre.yPos);
         graphicsContext.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
@@ -74,7 +74,7 @@ public class Renderer {
 
         rectangle.setRotate(position.getRotation());
 
-        if(isFilled) rectangle.setFill(paint);
+        if (isFilled) rectangle.setFill(paint);
         else rectangle.setStroke(paint);
 
         group.getChildren().add(rectangle);
@@ -87,7 +87,7 @@ public class Renderer {
         circle.setRadius(radius);
         circle.setRotate(position.getRotation());
 
-        if(isFilled) circle.setFill(paint);
+        if (isFilled) circle.setFill(paint);
         else circle.setStroke(paint);
 
         group.getChildren().add(circle);
@@ -97,17 +97,16 @@ public class Renderer {
         graphicsContext.drawImage(image, position.xPos, position.yPos, width, height);
     }
 
-    public void drawImageTile(ImageTile imageTile, Vector2 position, int tileX, int tileY){
+    public void drawImageTile(ImageTile imageTile, Vector2 position, int tileX, int tileY) {
         graphicsContext.drawImage(
                 imageTile.getImageTile(tileX, tileY),
                 position.xPos,
                 position.yPos,
                 imageTile.getTileWidth(),
-                imageTile.getTileHeight()
-        );
+                imageTile.getTileHeight());
     }
 
-    public void drawText(String textContent, Vector2 position, Paint paint, Font font){
+    public void drawText(String textContent, Vector2 position, Paint paint, Font font) {
         Text text = new Text();
         text.setText(textContent);
         text.setFill(paint);
@@ -120,10 +119,10 @@ public class Renderer {
     }
 
     /*
-    * =======================================================================
-    * ======================== GETTERS AND SETTERS ==========================
-    * =======================================================================
-    */
+     * =======================================================================
+     * ======================== GETTERS AND SETTERS ==========================
+     * =======================================================================
+     */
 
     public GraphicsContext getGraphicsContext() {
         return graphicsContext;
@@ -145,7 +144,7 @@ public class Renderer {
         this.defaultFont = defaultFont;
     }
 
-    public Point2D getScreenCenter(){
+    public Point2D getScreenCenter() {
         return new Point2D(canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 }

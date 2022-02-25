@@ -1,11 +1,11 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.graphics.gradients;
 
 import dev.aurumbyte.sypherengine.math.Vector2;
-import javafx.scene.paint.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.paint.*;
 
 public class GradientBuilder {
     GradientType gradientType;
@@ -15,7 +15,7 @@ public class GradientBuilder {
     boolean isProportional = true;
     CycleMethod cycleMethod = CycleMethod.NO_CYCLE;
 
-    public GradientBuilder(Vector2 start, Vector2 end, List<Stop> stops){
+    public GradientBuilder(Vector2 start, Vector2 end, List<Stop> stops) {
         this.start = start;
         this.end = end;
         this.stops = stops;
@@ -23,7 +23,7 @@ public class GradientBuilder {
         this.gradientType = GradientType.LINEAR;
     }
 
-    public GradientBuilder(Vector2 start, Vector2 end, Stop[] stops){
+    public GradientBuilder(Vector2 start, Vector2 end, Stop[] stops) {
         this.start = start;
         this.end = end;
         this.stops.addAll(Arrays.asList(stops));
@@ -31,7 +31,7 @@ public class GradientBuilder {
         this.gradientType = GradientType.LINEAR;
     }
 
-    public GradientBuilder(Vector2 center, int focusAngle, int focusDistance, int radius, List<Stop> stops){
+    public GradientBuilder(Vector2 center, int focusAngle, int focusDistance, int radius, List<Stop> stops) {
         this.stops = stops;
         this.position = center;
         this.focusAngle = focusAngle;
@@ -41,7 +41,7 @@ public class GradientBuilder {
         this.gradientType = GradientType.RADIAL;
     }
 
-    public GradientBuilder(Vector2 center, int focusAngle, int focusDistance, int radius,  Stop[] stops){
+    public GradientBuilder(Vector2 center, int focusAngle, int focusDistance, int radius, Stop[] stops) {
         this.stops.addAll(Arrays.asList(stops));
         this.position = center;
         this.focusAngle = focusAngle;
@@ -51,18 +51,11 @@ public class GradientBuilder {
         this.gradientType = GradientType.RADIAL;
     }
 
-    public Paint buildGradient(){
-        switch (gradientType){
+    public Paint buildGradient() {
+        switch (gradientType) {
             case LINEAR -> {
                 return new LinearGradient(
-                        start.xPos,
-                        start.yPos,
-                        end.xPos,
-                        end.yPos,
-                        isProportional,
-                        cycleMethod,
-                        stops
-                );
+                        start.xPos, start.yPos, end.xPos, end.yPos, isProportional, cycleMethod, stops);
             }
 
             case RADIAL -> {
@@ -74,8 +67,7 @@ public class GradientBuilder {
                         radius,
                         isProportional,
                         cycleMethod,
-                        stops
-                );
+                        stops);
             }
 
             default -> {
@@ -119,6 +111,7 @@ public class GradientBuilder {
     }
 
     enum GradientType {
-        RADIAL, LINEAR
+        RADIAL,
+        LINEAR
     }
 }

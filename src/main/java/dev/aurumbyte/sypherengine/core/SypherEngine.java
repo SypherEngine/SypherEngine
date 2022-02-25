@@ -1,3 +1,4 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core;
 
 import dev.aurumbyte.sypherengine.config.EngineConfig;
@@ -7,7 +8,6 @@ import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.core.logic.GameManager;
 import dev.aurumbyte.sypherengine.logging.ByteLogger;
 import dev.aurumbyte.sypherengine.logging.logUtils.LoggerLevel;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -22,7 +22,8 @@ import java.io.IOException;
 public class SypherEngine extends Application {
     public KeyListener keyListener = KeyListener.getInstance();
     public MouseListener mouseListener = MouseListener.getInstance();
-    private Renderer renderer;
+    Renderer renderer;
+    Scene scene;
 
     private final ByteLogger LOGGER = new ByteLogger(false, LoggerLevel.DEBUG);
 
@@ -40,7 +41,7 @@ public class SypherEngine extends Application {
         LOGGER.info("Initializing Engine...");
 
         Group group = new Group();
-        Scene scene = new Scene(group, width, height);
+        scene = new Scene(group, width, height);
         Canvas canvas = new Canvas(width, height);
 
         stage.setTitle(title);
@@ -49,7 +50,7 @@ public class SypherEngine extends Application {
 
         renderer = new Renderer(group, scene, canvas);
 
-        //listeners
+        // listeners
         keyListener.pollScene(scene);
         mouseListener.pollScene(scene);
 
@@ -58,16 +59,16 @@ public class SypherEngine extends Application {
         LOGGER.info("Engine Initialized Successfully! Running Game " + title + "...");
 
         Timeline gameLoop = new Timeline();
-        gameLoop.setCycleCount( Timeline.INDEFINITE );
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame keyFrame = new KeyFrame(
-                Duration.seconds(1 / fixedUpdate),                // 60 FPS
+                Duration.seconds(1 / fixedUpdate), // 60 FPS
                 ae -> {
-                    fps = (float)(1 / 0.016);
+                    fps = (float) (1 / 0.016);
 
                     renderer.clear();
                     group.getChildren().add(canvas);
-
+                    group.getChildren().add(game.getCurrentScene().getCamera().getParallelCamera());
 
                     game.gameUpdate(INSTANCE);
                     game.gameRender(INSTANCE);
@@ -76,11 +77,10 @@ public class SypherEngine extends Application {
         gameLoop.getKeyFrames().add(keyFrame);
         gameLoop.play();
 
-
         stage.show();
     }
 
-    public static void init(GameManager game){
+    public static void init(GameManager game) {
         SypherEngine.game = game;
         SypherEngine.width = 1280;
         SypherEngine.height = 720;
@@ -89,7 +89,7 @@ public class SypherEngine extends Application {
         SypherEngine.fps = fixedUpdate;
     }
 
-    public static void init(GameManager game, String title){
+    public static void init(GameManager game, String title) {
         SypherEngine.game = game;
         SypherEngine.title = title;
         SypherEngine.width = 1280;
@@ -99,7 +99,7 @@ public class SypherEngine extends Application {
         SypherEngine.fps = fixedUpdate;
     }
 
-    public static void init(GameManager game, EngineConfig config){
+    public static void init(GameManager game, EngineConfig config) {
         SypherEngine.game = game;
         SypherEngine.fixedUpdate = config.getFixedUpdate();
         SypherEngine.title = config.getTitle();
@@ -125,12 +125,11 @@ public class SypherEngine extends Application {
         return LOGGER;
     }
 
-    public void setScene(dev.aurumbyte.sypherengine.components.scene.Scene scene){
-        game.setCurrentScene(scene);
+    public Scene getScene() {
+        return scene;
     }
 
-    public static void run(String[] args)
-    {
+    public static void run(String[] args) {
         launch(args);
     }
 }

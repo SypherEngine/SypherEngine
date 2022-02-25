@@ -1,3 +1,4 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.ui;
 
 import dev.aurumbyte.sypherengine.components.Entity;

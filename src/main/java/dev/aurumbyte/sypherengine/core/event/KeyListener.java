@@ -1,10 +1,10 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.event;
-
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 
 import java.util.HashSet;
 import java.util.Set;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 
 public class KeyListener {
     private static Scene scene;
@@ -48,32 +48,24 @@ public class KeyListener {
         return keysDown.contains(keyCode);
     }
 
-    public boolean horizontalAxis(){
-        if(isDown(KeyCode.LEFT) || isDown(KeyCode.A)) {
+    public boolean horizontalAxis() {
+        if (isDown(KeyCode.LEFT) || isDown(KeyCode.A)) {
             xDirection = -1;
             return true;
-        }
-
-        else if(isDown(KeyCode.RIGHT) || isDown(KeyCode.D)) {
+        } else if (isDown(KeyCode.RIGHT) || isDown(KeyCode.D)) {
             xDirection = 1;
             return true;
-        }
-
-        else return false;
+        } else return false;
     }
 
-    public boolean verticalAxis(){
-        if(isDown(KeyCode.UP) || isDown(KeyCode.W)) {
+    public boolean verticalAxis() {
+        if (isDown(KeyCode.UP) || isDown(KeyCode.W)) {
             yDirection = -1;
             return true;
-        }
-
-        else if(isDown(KeyCode.DOWN) || isDown(KeyCode.S)) {
+        } else if (isDown(KeyCode.DOWN) || isDown(KeyCode.S)) {
             yDirection = 1;
             return true;
-        }
-
-        else return false;
+        } else return false;
     }
 
     public int getHorizontalVector() {
@@ -86,7 +78,8 @@ public class KeyListener {
 
     @Override
     public String toString() {
-        StringBuilder keys = new StringBuilder("KeyPolling on scene (").append(scene).append(")");
+        StringBuilder keys =
+                new StringBuilder("KeyPolling on scene (").append(scene).append(")");
         for (KeyCode code : keysDown) {
             keys.append(code.getName()).append(" ");
         }

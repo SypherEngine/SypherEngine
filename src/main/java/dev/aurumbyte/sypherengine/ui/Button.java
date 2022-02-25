@@ -1,3 +1,4 @@
+/* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.ui;
 
 import dev.aurumbyte.sypherengine.core.SypherEngine;
@@ -16,7 +17,7 @@ public class Button extends UIElement {
 
     public boolean hoverEvent = false, clickEvent = false;
 
-    public Button(String text, Vector2 position, int width, int height){
+    public Button(String text, Vector2 position, int width, int height) {
         this.buttonText = text;
         this.height = height;
         this.width = width;
@@ -25,7 +26,7 @@ public class Button extends UIElement {
         this.buttonShape = ButtonShape.RECTANGLE;
     }
 
-    public Button(String text, Vector2 position, int radius){
+    public Button(String text, Vector2 position, int radius) {
         this.buttonText = text;
         this.radius = radius;
         this.buttonPos = position;
@@ -41,15 +42,16 @@ public class Button extends UIElement {
         switch (buttonShape) {
             case RECTANGLE -> {
                 Point2D mousePos = engine.mouseListener.getMousePos();
-                hoverEvent = (mousePos.getX() > xPos && mousePos.getX() < xPos + width) && (mousePos.getY() > yPos && mousePos.getY() < yPos + height);
+                hoverEvent = (mousePos.getX() > xPos && mousePos.getX() < xPos + width)
+                        && (mousePos.getY() > yPos && mousePos.getY() < yPos + height);
                 clickEvent = hoverEvent && engine.mouseListener.isDown(MouseButton.PRIMARY);
             }
 
             case CIRCLE -> {
                 Point2D mousePos = engine.mouseListener.getMousePos();
                 hoverEvent = Math.sqrt(((xPos + mousePos.getX()) * (xPos + mousePos.getX()))
-                    +
-                        ((yPos + mousePos.getY()) * (yPos + mousePos.getY()))) < radius ;
+                                + ((yPos + mousePos.getY()) * (yPos + mousePos.getY())))
+                        < radius;
                 clickEvent = hoverEvent && engine.mouseListener.isDown(MouseButton.PRIMARY);
             }
         }
@@ -62,32 +64,47 @@ public class Button extends UIElement {
 
         switch (buttonShape) {
             case RECTANGLE -> {
-                if(buttonGraphics == null) {
-                    if(hoverEvent){
-                        engine.getRenderer().drawRectangle(buttonPos, (int)width, (int)height, true, color != null ? color.darker() : defaultColor.darker());
-                        engine.getRenderer().drawText(buttonText,
-                                new Vector2((float)(xPos + width/2), (float)(yPos + height/2)),
-                                textColor != null ? textColor : defaultTextColour,
-                                font != null ? font : defaultFont
-                        );
+                if (buttonGraphics == null) {
+                    if (hoverEvent) {
+                        engine.getRenderer()
+                                .drawRectangle(
+                                        buttonPos,
+                                        (int) width,
+                                        (int) height,
+                                        true,
+                                        color != null ? color.darker() : defaultColor.darker());
+                        engine.getRenderer()
+                                .drawText(
+                                        buttonText,
+                                        new Vector2((float) (xPos + width / 2), (float) (yPos + height / 2)),
+                                        textColor != null ? textColor : defaultTextColour,
+                                        font != null ? font : defaultFont);
                     }
 
-                    engine.getRenderer().drawRectangle(buttonPos, (int)width, (int)height, true, color != null ? color : defaultColor);
-                    engine.getRenderer().drawText(buttonText,
-                            new Vector2((float)(xPos + width/2), (float)(yPos + height/2)),
-                            textColor != null ? textColor : defaultTextColour,
-                            font != null ? font : defaultFont
-                    );
+                    engine.getRenderer()
+                            .drawRectangle(
+                                    buttonPos, (int) width, (int) height, true, color != null ? color : defaultColor);
+                    engine.getRenderer()
+                            .drawText(
+                                    buttonText,
+                                    new Vector2((float) (xPos + width / 2), (float) (yPos + height / 2)),
+                                    textColor != null ? textColor : defaultTextColour,
+                                    font != null ? font : defaultFont);
                 } else {
-                    if(hoverEvent) engine.getRenderer().drawImage(buttonGraphicsOnHover, buttonPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
-                    engine.getRenderer().drawImage(buttonGraphics, buttonPos, (int)buttonGraphics.getWidth(), (int)buttonGraphics.getHeight());
+                    if (hoverEvent)
+                        engine.getRenderer()
+                                .drawImage(buttonGraphicsOnHover, buttonPos, (int) buttonGraphics.getWidth(), (int)
+                                        buttonGraphics.getHeight());
+                    engine.getRenderer().drawImage(buttonGraphics, buttonPos, (int) buttonGraphics.getWidth(), (int)
+                            buttonGraphics.getHeight());
                 }
             }
-            case CIRCLE -> engine.getRenderer().drawCircle(buttonPos, radius, true, color != null ? color : defaultColor);
+            case CIRCLE -> engine.getRenderer()
+                    .drawCircle(buttonPos, radius, true, color != null ? color : defaultColor);
         }
     }
 
-    public void setPosition(int xPos, int yPos){
+    public void setPosition(int xPos, int yPos) {
         buttonPos.setPosition(xPos, yPos);
     }
 
@@ -100,17 +117,17 @@ public class Button extends UIElement {
     }
 
     public int getButtonWidth() {
-        if(buttonShape == ButtonShape.RECTANGLE) return (int)width;
+        if (buttonShape == ButtonShape.RECTANGLE) return (int) width;
         else throw new Error("The Button is not a rectangle! It doesn't have a width!");
     }
 
     public int getButtonHeight() {
-        if(buttonShape == ButtonShape.RECTANGLE) return (int)height;
+        if (buttonShape == ButtonShape.RECTANGLE) return (int) height;
         else throw new Error("The Button is not a rectangle! It doesn't have a height!");
     }
 
     public int getRadius() {
-        if(buttonShape == ButtonShape.CIRCLE) return radius;
+        if (buttonShape == ButtonShape.CIRCLE) return radius;
         else throw new Error("The Button is not a circle! It doesn't have a radius!");
     }
 
@@ -119,12 +136,12 @@ public class Button extends UIElement {
     }
 
     public void setWidth(int width) {
-        if(buttonShape == ButtonShape.RECTANGLE) this.width = width;
+        if (buttonShape == ButtonShape.RECTANGLE) this.width = width;
         else throw new Error("The button is not a rectangle! You cannot set a width value");
     }
 
     public void setHeight(int height) {
-        if(buttonShape == ButtonShape.RECTANGLE) this.height = height;
+        if (buttonShape == ButtonShape.RECTANGLE) this.height = height;
         else throw new Error("The button is not a rectangle! You cannot set a height value");
     }
 
@@ -149,7 +166,7 @@ public class Button extends UIElement {
     }
 
     public void setRadius(int radius) {
-        if(buttonShape == ButtonShape.RECTANGLE) this.radius = radius;
+        if (buttonShape == ButtonShape.RECTANGLE) this.radius = radius;
         else throw new Error("The button is not a circle! You cannot set a radius value to a circle!");
     }
 
@@ -166,6 +183,8 @@ public class Button extends UIElement {
     }
 
     public enum ButtonShape {
-        RECTANGLE, CIRCLE, POLYGON
+        RECTANGLE,
+        CIRCLE,
+        POLYGON
     }
 }
