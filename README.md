@@ -5,7 +5,7 @@
   <a href="https://github.com/SypherEngine/SypherEngine/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/SypherEngine/SypherEngine?style=for-the-badge"></a>
   <a href="https://github.com/SypherEngine/SypherEngine/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SypherEngine/SypherEngine?style=for-the-badge"></a>
   <a href="https://github.com/SypherEngine/SypherEngine/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/SypherEngine/SypherEngine?style=for-the-badge"></a>
-  <a href="https://discord.gg/NqEfyxVufP"><img alt="Discord" src="https://img.shields.io/discord/933650222347857971?style=for-the-badge"></a>
+ <a href="https://dsc.gg/sypherengine"><img alt="Discord" src="https://img.shields.io/discord/933650222347857971?style=for-the-badge"></a>
 </div>
 
 <br>
