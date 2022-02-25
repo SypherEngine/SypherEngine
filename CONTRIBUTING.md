@@ -15,74 +15,21 @@ Hi there! And thanks for your interest in the growth of this project! Here a few
 - Last but not least, please follow proper code formatting as per the current code base, it keeps the code consistent and clean.
 
 ## Code formatting
+### Blocks
 
-#### Control Statement Formatting
 ```java
-for(int i = 0; i < 100; i++){
-  if(i == 100){
-  
-  }
+public void method() {
+    // this is correct
 }
 
-//or
-
-for(int i = 0; i < 100; i++) {
-  if(i == 100) {
-  
-  }
-}
-```
-
-#### Method Formatting
-```java
-public static void methodName(String param1, int param2){
-
-}
-
-// or
-
-public static void methodName(String param1, int param2) {
-
-}
-```
-
-#### Long conditions
-```java
-if(condition1 //could be longer, i just used "condition1..." for brevity
-&& condition2 
-|| condition3 
-|| something > anotherthing)
+public void method()
 {
-  //code here
+    // this, although okay, isn't part of SypherEngine's code convention
 }
 ```
 
-#### Multiple Arguments / Long Arguments
-```java
-//actual working code as an example (drawing a square to center of the screen (almost))
-
-engine.getRenderer().drawRectangle(
-  engine.getRenderer().getScreenCenter().getX(),
-  engine.getRenderer().getScreenCenter().getY(),
-  50,
-  50,
-  true //fill in the square
-  Color.BLUE
-);
-```
-
-### Switch statements
-```java
-//use the new enhanced switch cases in Java
-switch(something){
-  case FIRSTCASE -> one line; //if return statement or direct break
-  case NEXTCASE -> {
-    //multiple statements
-  }
-}
-```
-
-> Tabs are 4 spaces
+ - Other than this, after writing your code, run `mvn spotless:apply` to format the code, and you'll be fine
+ - Run `mvn spotless:check` to check of the code is formatted properly
 
 #### Naming
 
