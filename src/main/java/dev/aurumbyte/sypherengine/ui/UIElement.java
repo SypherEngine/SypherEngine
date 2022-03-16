@@ -1,10 +1,13 @@
 /* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.ui;
 
-import dev.aurumbyte.sypherengine.components.Entity;
+import dev.aurumbyte.sypherengine.ecs.Entity;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * <p>The UIElement interface, implemented by all UI classes</p>
+ */
 public abstract class UIElement extends Entity {
     int radius;
 

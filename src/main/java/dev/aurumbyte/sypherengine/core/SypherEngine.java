@@ -8,6 +8,7 @@ import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.core.logic.GameManager;
 import dev.aurumbyte.sypherengine.logging.ByteLogger;
 import dev.aurumbyte.sypherengine.logging.logUtils.LoggerLevel;
+import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -17,27 +18,69 @@ import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
-
+/**
+ * <p>The main class, the heart of the game engine, where everything is run</p>
+ * @author AurumByte
+ * @since v0.3.0
+ */
 public class SypherEngine extends Application {
+    /**
+     * The KeyListener
+     */
     public KeyListener keyListener = KeyListener.getInstance();
+
+    /**
+     * The MouseListener
+     */
     public MouseListener mouseListener = MouseListener.getInstance();
+
+    /**
+     * The Renderer
+     */
     Renderer renderer;
+
+    /**
+     * The Scene
+     */
     Scene scene;
 
+    /**
+     * The Logger
+     */
     private final ByteLogger LOGGER = new ByteLogger(false, LoggerLevel.DEBUG);
 
+    /**
+     * Frames Per Second
+     */
     static float fps;
+
+    /**
+     * The fixed number times the engine updates
+     */
     static float fixedUpdate;
 
+    /**
+     * The Game, The only entrypoint into the engine's inner workings
+     */
     static GameManager game;
-    static String title = "SypherEngine";
-    SypherEngine INSTANCE = this;
 
+    /**
+     * The Game window title
+     */
+    static String title = "SypherEngine";
+
+    /**
+     * The width and height of the screen
+     */
     static int width, height;
 
+    /**
+     * <p>The main game loop</p>
+     * @param stage The main stage
+     * @throws IOException IOException
+     * @since v0.3.0
+     */
     public void start(Stage stage) throws IOException {
-
         LOGGER.info("Initializing Engine...");
 
         Group group = new Group();
@@ -54,7 +97,7 @@ public class SypherEngine extends Application {
         keyListener.pollScene(scene);
         mouseListener.pollScene(scene);
 
-        game.gameInit(INSTANCE);
+        game.gameInit(this);
 
         LOGGER.info("Engine Initialized Successfully! Running Game " + title + "...");
 
@@ -64,14 +107,14 @@ public class SypherEngine extends Application {
         KeyFrame keyFrame = new KeyFrame(
                 Duration.seconds(1 / fixedUpdate), // 60 FPS
                 ae -> {
-                    fps = (float) (1 / 0.016);
+                    fps = fixedUpdate;
 
                     renderer.clear();
                     group.getChildren().add(canvas);
                     group.getChildren().add(game.getCurrentScene().getCamera().getParallelCamera());
 
-                    game.gameUpdate(INSTANCE);
-                    game.gameRender(INSTANCE);
+                    game.gameUpdate(1 / fps);
+                    game.gameRender(this);
                 });
 
         gameLoop.getKeyFrames().add(keyFrame);
@@ -80,6 +123,11 @@ public class SypherEngine extends Application {
         stage.show();
     }
 
+    /**
+     * <p>Initializing the engine with a game</p>
+     * @param game the game to be run
+     * @since v0.3.0
+     */
     public static void init(GameManager game) {
         SypherEngine.game = game;
         SypherEngine.width = 1280;
@@ -89,6 +137,12 @@ public class SypherEngine extends Application {
         SypherEngine.fps = fixedUpdate;
     }
 
+    /**
+     * <p>Initializing the engine with a game and a game title</p>
+     * @param game the game to be run
+     * @param title the title of the game
+     * @since v0.3.0
+     */
     public static void init(GameManager game, String title) {
         SypherEngine.game = game;
         SypherEngine.title = title;
@@ -99,6 +153,12 @@ public class SypherEngine extends Application {
         SypherEngine.fps = fixedUpdate;
     }
 
+    /**
+     * <p>Initializing the engine with a game and a config</p>
+     * @param game the game to be run
+     * @param config the configuration by which the game should be run
+     * @since v0.3.0
+     */
     public static void init(GameManager game, EngineConfig config) {
         SypherEngine.game = game;
         SypherEngine.fixedUpdate = config.getFixedUpdate();
@@ -109,26 +169,51 @@ public class SypherEngine extends Application {
         SypherEngine.fps = fixedUpdate;
     }
 
+    /**
+     * Gets the renderer
+     * @since v0.3.0
+     */
     public Renderer getRenderer() {
         return renderer;
     }
 
+    /**
+     * Gets the screen height
+     * @since v0.3.0
+     */
     public int getScreenHeight() {
         return height;
     }
 
+    /**
+     * Gets the screen width
+     * @since v0.3.0
+     */
     public int getScreenWidth() {
         return width;
     }
 
+    /**
+     * Gets the logger
+     * @since v0.3.0
+     */
     public ByteLogger getLogger() {
         return LOGGER;
     }
 
+    /**
+     * Gets the scene
+     * @since v0.3.0
+     */
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * Runs the engine
+     * @param args The arguments by which to run the game
+     * @since v0.3.0
+     */
     public static void run(String[] args) {
         launch(args);
     }

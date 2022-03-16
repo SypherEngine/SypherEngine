@@ -3,33 +3,40 @@ package dev.aurumbyte.sypherengine.core.logic;
 
 import dev.aurumbyte.sypherengine.components.scene.Scene;
 import dev.aurumbyte.sypherengine.core.SypherEngine;
+import dev.aurumbyte.sypherengine.core.event.KeyListener;
+import dev.aurumbyte.sypherengine.core.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class GameManager extends Scene {
+    static KeyListener keyListener;
+    static MouseListener mouseListener;
+
     Scene currentScene = this;
 
     Map<String, Scene> scenes = new HashMap<>();
 
     public void gameInit(SypherEngine engine) {
+        keyListener = engine.keyListener;
+        mouseListener = engine.mouseListener;
+
         if (currentScene != this) this.init(engine);
 
-        engine.getRenderer().addEntities(currentScene.entities);
         engine.getScene().setCamera(currentScene.getCamera().getParallelCamera());
         currentScene.init(engine);
     }
 
-    public void gameUpdate(SypherEngine engine) {
-        if (currentScene != this) this.update(engine);
-        currentScene.update(engine);
+    public void gameUpdate(float deltaTime) {
+        if (currentScene != this) this.update(deltaTime);
+        currentScene.update(deltaTime);
 
         currentScene.entities.forEach(entity -> {
             if (entity.isDead()) currentScene.entities.remove(entity);
-            entity.update(engine);
+            entity.update(deltaTime);
 
             entity.getComponents().forEach(component -> {
-                component.update(engine);
+                component.update(deltaTime);
             });
         });
     }
@@ -52,7 +59,7 @@ public abstract class GameManager extends Scene {
 
     public abstract void init(SypherEngine engine);
 
-    public abstract void update(SypherEngine engine);
+    public abstract void update(float deltaTime);
 
     public abstract void render(SypherEngine engine);
 
@@ -82,5 +89,13 @@ public abstract class GameManager extends Scene {
 
     public void getScene(String sceneName) {
         scenes.get(sceneName);
+    }
+
+    public static KeyListener getKeyListener() {
+        return keyListener;
+    }
+
+    public static MouseListener getMouseListener() {
+        return mouseListener;
     }
 }

@@ -7,72 +7,27 @@ import java.io.InputStream;
 import java.util.Objects;
 import javax.sound.sampled.*;
 
+/**
+ * The Audio Engine
+ * @author AurumByte
+ * @since v0.3.0
+ */
 public class Audio {
-    /*
-    String file;
-    Media media;
-    MediaPlayer mediaPlayer;
-
-    public Audio(String file){
-    	this.file = file;
-    	this.media = new Media(new File(file).toURI().toString());
-    	this.mediaPlayer = new MediaPlayer(media);
-    }
-
-    public void play() {
-    	mediaPlayer.play();
-    }
-
-    public void stop() {
-    	mediaPlayer.stop();
-    }
-
-    public void loop() {
-    	mediaPlayer.setOnEndOfMedia(() -> {
-    		mediaPlayer.seek(Duration.ZERO);
-    		mediaPlayer.play();
-    	});
-    }
-
-    public MediaPlayer getMediaPlayer() {
-    	return mediaPlayer;
-    }
-
-    public Media getMedia() {
-    	return media;
-    }
-
-    public void setMedia(Media media) {
-    	this.media = media;
-    }
-
-    public static class Clip {
-    	String file;
-    	AudioClip audioClip;
-
-    	public Clip(String file){
-    		this.file = file;
-    		this.audioClip = new AudioClip(new File(file).toURI().toString());
-    	}
-
-    	public void play() {
-    		audioClip.play();
-    	}
-
-    	public void loop() {
-    		audioClip.play();
-    		if(!audioClip.isPlaying()) audioClip.play();
-    	}
-
-    	public void stop() {
-    		audioClip.stop();
-    	}
-    }
-
-    */
+    /**
+     * The audio file sample
+     */
     private Clip clip;
+
+    /**
+     * The float controller for the audio file
+     */
     private FloatControl controller;
 
+    /**
+     * <p>Constructor to get the audio resource</p>
+     * @param path The path to the specified audio file.
+     * @since 0.3.0
+     */
     public Audio(String path) {
         try {
             InputStream audio = Audio.class.getResourceAsStream(path);
@@ -99,6 +54,10 @@ public class Audio {
         }
     }
 
+    /**
+     * <p>Playing the audioclip</p>
+     * @since 0.3.0
+     */
     public void play() {
         if (clip == null) return;
 
@@ -110,25 +69,46 @@ public class Audio {
         }
     }
 
+    /**
+     * <p>Stopping the audioclip</p>
+     * @since 0.3.0
+     */
     public void stop() {
         if (clip.isRunning()) clip.stop();
     }
 
+    /**
+     * <p>Closing the audioclip and deallocating it from memory</p>
+     * @since 0.3.0
+     */
     public void close() {
         stop();
         clip.drain();
         clip.close();
     }
 
+    /**
+     * <p>Playing the audioclip on loop</p>
+     * @since 0.3.0
+     */
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         play();
     }
 
+    /**
+     * <p>Setting the volume of the audioclip</p>
+     * @param volume The volume to be specified
+     * @since 0.3.0
+     */
     public void setVolume(float volume) {
         controller.setValue(volume);
     }
 
+    /**
+     * <p>Returning whether the audioclip is playing or not</p>
+     * @since 0.3.0
+     */
     public boolean isRunning() {
         return clip.isRunning();
     }
