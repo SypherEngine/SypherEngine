@@ -14,8 +14,6 @@
 
 <h3 align="center"><strong>Disclaimer</strong></h3> 
 
-> The project is going dormant for a while as I've gotten busy with some other things, but this project is still very much alive and kicking! :)
-
 > SypherEngine is currently in an alpha stage and is subject to many changes. While it does have basic features, there are many bugs still untracked and the documentation is currently a work in progress... If you wish to help, all help is appreciated!
 
 <h1 align="center">🔨 Features 🔨</h1> 
