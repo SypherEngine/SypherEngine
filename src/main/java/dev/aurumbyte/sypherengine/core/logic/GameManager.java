@@ -21,14 +21,14 @@ public abstract class GameManager extends Scene {
         keyListener = engine.keyListener;
         mouseListener = engine.mouseListener;
 
-        if (currentScene != this) this.init(engine);
+        this.init(engine);
 
         engine.getScene().setCamera(currentScene.getCamera().getParallelCamera());
         currentScene.init(engine);
     }
 
     public void gameUpdate(float deltaTime) {
-        if (currentScene != this) this.update(deltaTime);
+        this.update(deltaTime);
         currentScene.update(deltaTime);
 
         currentScene.entities.forEach(entity -> {
@@ -42,8 +42,6 @@ public abstract class GameManager extends Scene {
     }
 
     public void gameRender(SypherEngine engine) {
-        if (currentScene != this) this.render(engine);
-
         currentScene.render(engine);
 
         currentScene.entities.forEach(entity -> {
