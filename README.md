@@ -16,6 +16,12 @@
 
 > SypherEngine is currently in an alpha stage and is subject to many changes. While it does have basic features, there are many bugs still untracked and the documentation is currently a work in progress... If you wish to help, all help is appreciated!
 
+<h1 align="center">:chains: Helpful links :chains:</h1>
+
+ - [Website](https://sypherengine.github.io/)
+ - [Docs (v0.4.0)](https://sypherengine.github.io/javadocs/SypherEngine/module-summary.html)
+ - [Discord Community](https://dsc.gg/sypherengine)
+
 <h1 align="center">🔨 Features 🔨</h1> 
 
 - Rendering Framework
@@ -24,6 +30,7 @@
 - Audio Engine
 - Sprite rendering and Animations
 - Logging
+- 2D Camera
 
 <h1 align="center">💻 Getting SypherEngine 💻</h1>
 
@@ -88,10 +95,10 @@ public class Main extends GameManager {
   public void init(SypherEngine engine){}
   
   @Override
-  public void update(SypherEngine engine){}
+  public void update(float deltaTime){}
 
   @Override
-  public void render(SypherEngine engine){}
+  public void render(Renderer renderer){}
 
   public static void main(String[] args){
     SypherEngine.init(new Main());
