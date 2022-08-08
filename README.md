@@ -16,21 +16,29 @@
 
 > SypherEngine is currently in an alpha stage and is subject to many changes. While it does have basic features, there are many bugs still untracked and the documentation is currently a work in progress... If you wish to help, all help is appreciated!
 
+<h1 align="center">:chains: Helpful links :chains:</h1>
+
+ - [Website](https://sypherengine.github.io/)
+ - [Docs (v0.4.0)](https://sypherengine.github.io/javadocs/SypherEngine/module-summary.html)
+ - [Discord Community](https://dsc.gg/sypherengine)
+
 <h1 align="center">🔨 Features 🔨</h1> 
 
 - Rendering Framework
+- Basic Event/Input Handling
 - Entity Component System
 - Scenes and Scene Switching
 - Audio Engine
 - Sprite rendering and Animations
 - Logging
+- 2D Camera
 
 <h1 align="center">💻 Getting SypherEngine 💻</h1>
 
 To use `SypherEngine`, please do make sure that you have the following requirements installed on your device.
 
-- Java 17 or greater
-- Maven
+- Java >= 17
+- Maven (Only required for building the project from scratch)
 
 If you do, then include the engine into your project as follows
 
@@ -88,20 +96,24 @@ public class Main extends GameManager {
   public void init(SypherEngine engine){}
   
   @Override
-  public void update(SypherEngine engine){}
+  public void update(float deltaTime){}
 
   @Override
-  public void render(SypherEngine engine){}
+  public void render(Renderer renderer){}
+  
+  @Override
+  public void dispose(){}
 
   public static void main(String[] args){
-    SypherEngine.init(new Main());
+    SypherEngine.init(new Main(), "Hello, World!"); // Creating a window titled "Hello, World!"
     SypherEngine.run();
   }
 }
 ```
-<h1 align="center">📇 License 📇</h1>
+<h1 align="center">📇 License and Code of Conduct 📇</h1>
 
 This project follows the MIT license, refer [LICENSE](https://github.com/SypherEngine/SypherEngine/blob/main/LICENSE)
+This project also follows the [Contributor Covenant Code of Conduct](https://github.com/SypherEngine/SypherEngine/blob/main/CODE_OF_CONDUCT.md)
 
 <h1 align="center">🤝 Contributing 🤝</h1>
 
@@ -109,4 +121,4 @@ From the smallest change to a bug fix or feature implementation, Contributions a
 
 <h1 align="center">🫂 Support 🫂</h1>
 
-This project is still new to the Open Source Community and we hope to make a good difference! If you like this project, consider giving it a star 🌟 to show your support. It helps a lot.
+This project is still new to the Open Source Community and we hope to make a good difference! If you like this project, consider giving it a star 🌟 to show your support. It helps a ton :)
