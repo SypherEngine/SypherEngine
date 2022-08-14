@@ -1,4 +1,4 @@
-<img src="https://github.com/SypherEngine/SypherEngine/blob/dev/media/branding/SypherEngineBanner.svg">
+<img src="https://github.com/SypherEngine/SypherEngine/blob/main/media/branding/SypherEngineBanner.png">
 <h1 align="center"><strong>A Simple and Lightweight Java Game Engine</strong></h1>
 
 <div align="center">
