@@ -53,7 +53,7 @@ public abstract class GameObject implements IRenderable {
     @Deprecated
     Rectangle2D boundary;
 
-    InputHandler inputHandler;
+    protected InputHandler inputHandler;
 
     public GameObject(InputHandler inputHandler) {
         this.gameObjectID = SypherEngine.domain.createEntity();
