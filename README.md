@@ -19,6 +19,7 @@
 <h1 align="center">:chains: Helpful links :chains:</h1>
 
  - [Website](https://sypherengine.github.io/)
+ - [Tutorial (v0.5.0 onwards)](https://aurumbyte.blogspot.com/2022/08/lets-build-game-java-style-sypherengine.html)
  - [Docs (v0.4.0)](https://sypherengine.github.io/javadocs/SypherEngine/module-summary.html)
  - [Discord Community](https://dsc.gg/sypherengine)
 
