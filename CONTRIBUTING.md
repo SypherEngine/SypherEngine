@@ -14,6 +14,8 @@ Hi there! And thanks for your interest in the growth of this project! Here a few
 
 - Last but not least, please follow proper code formatting as per the current code base, it keeps the code consistent and clean.
 
+Note: Following up on an issue is recommended only after the maintainer fails to respond for a week.
+
 ## Code formatting
 ### Blocks
 
@@ -47,3 +49,6 @@ public void method()
 git clone https://github.com/SypherEngine/SypherEngine.git
 ```
 - Build the engine using `mvn clean package` 
+
+Cheers!
+- AurumByte (Creator and Maintainer)
