@@ -133,26 +133,28 @@ public class Vector2 implements Serializable {
      * @since 0.3.0
      */
     public Vector2 multiply(float value) {
-        this.xPosi *= value;
-        this.yPosi *= value;
-
         this.xPos *= value;
         this.yPos *= value;
+
+        this.xPosi = (int)xPos;
+        this.yPosi = (int)yPos;
+
 
         return new Vector2(xPos, yPos);
     }
 
     /**
      * <p>Divides a Vector2 with another Vector2</p>
-     * @param vector2 The other Vector
+     * @param value, the value by which we are dividing the vector's magnitude
      * @since 0.3.0
      */
-    public Vector2 divide(Vector2 vector2) {
-        this.xPosi /= vector2.xPosi;
-        this.yPosi /= vector2.yPosi;
+    public Vector2 divide(float value) {
+        this.xPos /= value;
+        this.yPos /= value;
 
-        this.xPos /= vector2.xPos;
-        this.yPos /= vector2.yPos;
+        this.xPosi = (int)xPos;
+        this.yPosi = (int)yPos;
+
 
         return new Vector2(xPos, yPos);
     }
@@ -200,7 +202,7 @@ public class Vector2 implements Serializable {
      * <p>Normalizes the Vector</p>
      * @since v0.3.0
      */
-    public void normalize() {
+    public Vector2 normalize() {
         // sets length to 1
         double length = Math.sqrt(xPos * xPos + yPos * yPos);
 
@@ -209,6 +211,8 @@ public class Vector2 implements Serializable {
             xPos = xPos * s;
             yPos = yPos * s;
         }
+
+        return new Vector2(xPos, yPos);
     }
 
     /**
@@ -226,8 +230,52 @@ public class Vector2 implements Serializable {
         return xPos * other.xPos + yPos * other.yPos;
     }
 
+    public float lengthSquared(){
+        return (xPos * xPos) + (yPos * yPos);
+    }
+
+    public float get(int index){
+        switch (index){
+            case 0 -> {return xPos;}
+            case 1 -> {return yPos;}
+            default -> throw new IllegalArgumentException("There are only 2 components in a Vector2! 0 for the X component and 1 for the Y component");
+        }
+    }
+
+    public void setComponent(int index, float value){
+        switch (index){
+            case 0 -> {
+                this.xPos = value;
+                this.xPosi = (int)value;
+            }
+            case 1 -> {
+                this.yPos = value;
+                this.yPosi = (int)value;
+            }
+            default -> throw new IllegalArgumentException("There are only 2 components in a Vector2! 0 for the X component and 1 for the Y component");
+        }
+    }
+
+    public float length(){
+        return (float) Math.sqrt(lengthSquared());
+    }
+    public void set(Vector2 vector){
+        this.xPos = vector.xPos;
+        this.yPos = vector.yPos;
+        this.xPosi = (int)xPos;
+        this.yPosi = (int)yPos;
+        this.rotation = vector.rotation;
+    }
+
     @Override
     public String toString() {
         return "(x : " + xPos + ", y : " + yPos + ")";
+    }
+
+    public void set(float xPos, float yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xPosi = (int)xPos;
+        this.yPosi = (int)yPos;
     }
 }

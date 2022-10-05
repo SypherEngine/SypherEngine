@@ -1,7 +1,7 @@
 /* (C)2022 AurumByte */
-package dev.aurumbyte.sypherengine.core.ecs;
+package dev.aurumbyte.sypherengine.core.gameObject;
 
-import dev.aurumbyte.sypherengine.core.components.Animator2D;
+import dev.aurumbyte.sypherengine.core.graphics.animation.Animator2D;
 import dev.aurumbyte.sypherengine.core.event.InputHandler;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.util.math.Vector2;
@@ -66,12 +66,6 @@ public abstract class Sprite2D extends GameObject {
         updateSprite(deltaTime);
     }
 
-    /**
-     * <p>The render loop for the entity, the base of the sprite</p>
-     * @param renderer The renderer
-     */
-    @Override
-    public void render(Renderer renderer) {
-        renderer.drawImage(image, getTransform().getPosition(), (int) width, (int) height);
-    }
+    public abstract void render(Renderer renderer);
+    //TODO: add proper rendering logic
 }

@@ -1,7 +1,7 @@
 /* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.components.camera;
 
-import dev.aurumbyte.sypherengine.core.ecs.GameObject;
+import dev.aurumbyte.sypherengine.core.gameObject.GameObject;
 import dev.aurumbyte.sypherengine.util.math.Vector2;
 import javafx.scene.PerspectiveCamera;
 

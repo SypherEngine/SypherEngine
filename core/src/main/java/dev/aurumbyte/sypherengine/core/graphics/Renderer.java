@@ -1,9 +1,12 @@
 /* (C)2022 AurumByte */
 package dev.aurumbyte.sypherengine.core.graphics;
 
-import dev.aurumbyte.sypherengine.core.ecs.GameObject;
-import dev.aurumbyte.sypherengine.core.graphics.tiles.ImageTile;
+import dev.aurumbyte.sypherengine.core.gameObject.GameObject;
+import dev.aurumbyte.sypherengine.core.graphics.tiles.TilesetImage;
+import dev.aurumbyte.sypherengine.util.ObjectMap;
 import dev.aurumbyte.sypherengine.util.math.Vector2;
+import dev.aurumbyte.sypherengine.util.primitives.Box2D;
+import dev.aurumbyte.sypherengine.util.primitives.Polygon2D;
 import javafx.geometry.Point2D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
@@ -59,6 +62,11 @@ public class Renderer {
     Image background;
 
     /**
+     *  A list to keep track of every shape/object to be rendered
+     */
+    ObjectMap<Color> renderedObjects = new ObjectMap<>();
+
+    /**
      * Default background color
      */
     Color backgroundColor = Color.WHITE;
@@ -88,6 +96,7 @@ public class Renderer {
      */
     public void clear() {
         group.getChildren().clear();
+        //renderedObjects.clear();
         graphicsContext.setFill(backgroundColor);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
@@ -117,6 +126,7 @@ public class Renderer {
      * @param paint The Color or gradient to be filled in
      * @since 0.3.0
      */
+    @Deprecated
     public void drawRectangle(Vector2 position, float width, float height, boolean isFilled, Paint paint) {
         Rectangle rectangle = new Rectangle();
 
@@ -128,7 +138,30 @@ public class Renderer {
         rectangle.setRotate(position.getRotation());
 
         if (isFilled) rectangle.setFill(paint);
-        else rectangle.setStroke(paint);
+        else {
+            rectangle.setStroke(paint);
+            rectangle.setFill(backgroundColor);
+        }
+
+        group.getChildren().add(rectangle);
+    }
+
+    public void drawBox(Box2D box, Paint paint){
+        Rectangle rectangle = new Rectangle();
+
+        // The coordinates entered by the user will be the center of the box
+        rectangle.setX(box.getPosition().xPos - box.getWidth() / 2);
+        rectangle.setY(box.getPosition().yPos - box.getHeight() / 2);
+        rectangle.setWidth(box.getWidth());
+        rectangle.setHeight(box.getHeight());
+
+        rectangle.setRotate(box.getPosition().getRotation());
+        if(box.isFilled()) rectangle.setFill(paint);
+        else {
+            rectangle.setStroke(paint);
+            rectangle.setStrokeWidth(box.getStroke());
+            rectangle.setFill(backgroundColor);
+        }
 
         group.getChildren().add(rectangle);
     }
@@ -141,6 +174,7 @@ public class Renderer {
      * @param paint The Color or gradient to be filled in
      * @since 0.3.0
      */
+    @Deprecated
     public void drawCircle(Vector2 position, float radius, boolean isFilled, Paint paint) {
         Circle circle = new Circle();
         circle.setCenterX(position.xPos);
@@ -149,7 +183,27 @@ public class Renderer {
         circle.setRotate(position.getRotation());
 
         if (isFilled) circle.setFill(paint);
-        else circle.setStroke(paint);
+        else{
+            circle.setStroke(paint);
+            circle.setFill(backgroundColor);
+        }
+
+        group.getChildren().add(circle);
+    }
+
+    public void drawCircle(dev.aurumbyte.sypherengine.util.primitives.Circle c, Paint paint){
+        Circle circle = new Circle();
+        circle.setCenterX(c.getPosition().xPos);
+        circle.setCenterY(c.getPosition().yPos);
+        circle.setRadius(c.getRadius());
+        circle.setRotate(c.getPosition().getRotation());
+
+        if (c.isFilled()) circle.setFill(paint);
+        else{
+            circle.setStroke(paint);
+            circle.setStrokeWidth(c.getStroke());
+            circle.setFill(backgroundColor);
+        }
 
         group.getChildren().add(circle);
     }
@@ -163,24 +217,24 @@ public class Renderer {
      * @since 0.3.0
      */
     public void drawImage(Image image, Vector2 position, float width, float height) {
-        graphicsContext.drawImage(image, position.xPos, position.yPos, width, height);
+        graphicsContext.drawImage(image, position.xPos - width/2, position.yPos - height/2, width, height);
     }
 
     /**
      * <p>Drawing a image tile of specified measurements</p>
-     * @param imageTile The image tile to be rendered
+     * @param tilesetImage The image tile to be rendered
      * @param position The position of the image
      * @param tileX The tile count from left to right, starting from 0
      * @param tileY The tile count from the top to bottom, starting from 0
      * @since 0.3.0
      */
-    public void drawImageTile(ImageTile imageTile, Vector2 position, int tileX, int tileY) {
+    public void drawImageTile(TilesetImage tilesetImage, Vector2 position, int tileX, int tileY) {
         graphicsContext.drawImage(
-                imageTile.getImageTile(tileX, tileY),
-                position.xPos,
-                position.yPos,
-                imageTile.getTileWidth(),
-                imageTile.getTileHeight());
+                tilesetImage.getImageTile(tileX, tileY),
+                position.xPos - tilesetImage.getTileWidth()/2f,
+                position.yPos - tilesetImage.getTileHeight()/2f,
+                tilesetImage.getTileWidth(),
+                tilesetImage.getTileHeight());
     }
 
     /**
@@ -210,6 +264,7 @@ public class Renderer {
      * @param paint The Color or gradient to be filled in
      * @since 0.3.0
      */
+    @Deprecated
     public void drawLine(Vector2 start, Vector2 end, Optional<Paint> paint) {
         Line line = new Line();
         line.setStartX(start.xPos);
@@ -222,6 +277,19 @@ public class Renderer {
         group.getChildren().add(line);
     }
 
+    public void drawLine(dev.aurumbyte.sypherengine.util.primitives.Line l, Optional<Paint> paint){
+        Line line = new Line();
+        line.setStartX(l.getStart().xPos);
+        line.setStartY(l.getStart().yPos);
+        line.setEndX(l.getEnd().xPos);
+        line.setEndY(l.getEnd().yPos);
+
+        line.setStrokeWidth(l.getStroke());
+        paint.ifPresent(line::setStroke);
+
+        group.getChildren().add(line);
+    }
+
     /**
      * <p>Drawing text of specified measurements</p>
      * @param coords the coordinates of the polygon vertices
@@ -229,10 +297,26 @@ public class Renderer {
      * @param paint The color or gradient to be filled in
      * @since 0.3.0
      */
+    @Deprecated
     public void drawPolygon(double[] coords, boolean isFilled, Paint paint) {
         Polygon polygon = new Polygon(coords);
         if (isFilled) polygon.setFill(paint);
-        else polygon.setStroke(paint);
+        else {
+            polygon.setFill(backgroundColor);
+            polygon.setStroke(paint);
+        }
+
+        group.getChildren().add(polygon);
+    }
+
+    public void drawPolygon(Polygon2D polygon2D, Paint paint){
+        Polygon polygon = new Polygon(polygon2D.getPointsAsSingleArray());
+        if (polygon2D.isFilled()) polygon.setFill(paint);
+        else {
+            polygon.setFill(backgroundColor);
+            polygon.setStrokeWidth(polygon2D.getStroke());
+            polygon.setStroke(paint);
+        }
 
         group.getChildren().add(polygon);
     }
@@ -344,5 +428,9 @@ public class Renderer {
                 node.setEffect(effect);
             }
         }
+    }
+
+    protected void drawObjects(){
+        group.getChildren().addAll();
     }
 }

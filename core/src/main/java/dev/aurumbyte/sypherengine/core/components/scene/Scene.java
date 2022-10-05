@@ -3,7 +3,7 @@ package dev.aurumbyte.sypherengine.core.components.scene;
 
 import dev.aurumbyte.sypherengine.core.SypherEngine;
 import dev.aurumbyte.sypherengine.core.components.camera.Camera2D;
-import dev.aurumbyte.sypherengine.core.ecs.GameObject;
+import dev.aurumbyte.sypherengine.core.gameObject.GameObject;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import javafx.scene.AmbientLight;
 import javafx.scene.paint.Color;

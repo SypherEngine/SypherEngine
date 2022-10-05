@@ -2,10 +2,11 @@
 package dev.aurumbyte.sypherengine.core.graphics.gradients;
 
 import dev.aurumbyte.sypherengine.util.math.Vector2;
+import javafx.scene.paint.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javafx.scene.paint.*;
 
 public class GradientBuilder {
     GradientType gradientType;

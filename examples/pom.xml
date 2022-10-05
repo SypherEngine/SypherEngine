@@ -19,6 +19,12 @@
             <version>0.5.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.sypherengine</groupId>
+            <artifactId>physics</artifactId>
+            <version>0.5.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <properties>

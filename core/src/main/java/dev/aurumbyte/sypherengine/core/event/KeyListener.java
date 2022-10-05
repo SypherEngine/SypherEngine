@@ -21,7 +21,8 @@ public class KeyListener {
     /**
      * The keyset, containing keys pressed
      */
-    private static final Set<KeyCode> keysDown = new HashSet<>();
+    private static final Set<KeyCode> keysDown = new HashSet<>(), previousFrameKeysDown = new HashSet<>();
+    private static final Set<KeyCode> keysUp = new HashSet<>(), previousFrameKeysUp = new HashSet<>();
 
     /**
      * the vector direction value for x (for the {@code horizontalAxis} method)
@@ -57,6 +58,10 @@ public class KeyListener {
      * @since 0.3.0
      */
     private void clearKeys() {
+        //TODO: make a just released and just pressed event handling functions in the key event handler
+        previousFrameKeysUp.addAll(keysUp);
+        previousFrameKeysDown.addAll(keysDown);
+        keysUp.clear();
         keysDown.clear();
     }
 
@@ -79,9 +84,11 @@ public class KeyListener {
     private void setScene(Scene scene) {
         KeyListener.scene = scene;
         KeyListener.scene.setOnKeyPressed((keyEvent -> {
+            keysUp.remove(keyEvent.getCode());
             keysDown.add(keyEvent.getCode());
         }));
         KeyListener.scene.setOnKeyReleased((keyEvent -> {
+            keysUp.add(keyEvent.getCode());
             keysDown.remove(keyEvent.getCode());
         }));
     }
@@ -93,6 +100,14 @@ public class KeyListener {
      */
     public boolean isDown(KeyCode keyCode) {
         return keysDown.contains(keyCode);
+    }
+
+    public boolean isJustReleased(KeyCode keyCode){
+        return previousFrameKeysDown.contains(keyCode) && keysUp.contains(keyCode);
+    }
+
+    public boolean isJustPressed(KeyCode keyCode){
+        return previousFrameKeysUp.contains(keyCode) && keysDown.contains(keyCode);
     }
 
     /**

@@ -1,8 +1,8 @@
 /* (C)2022 AurumByte */
-package dev.aurumbyte.sypherengine.core.ecs;
+package dev.aurumbyte.sypherengine.core.gameObject;
 
 import dev.aurumbyte.sypherengine.core.SypherEngine;
-import dev.aurumbyte.sypherengine.core.components.Transform;
+import dev.aurumbyte.sypherengine.util.math.Transform;
 import dev.aurumbyte.sypherengine.core.event.InputHandler;
 import dev.aurumbyte.sypherengine.core.graphics.IRenderable;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
@@ -19,6 +19,8 @@ import java.util.List;
  * @see IRenderable
  */
 public abstract class GameObject implements IRenderable {
+    //TODO: figure out a way to add components into GameObject
+
     /**
      * Position of the entity
      */
@@ -151,7 +153,8 @@ public abstract class GameObject implements IRenderable {
      * @param components The components to be added
      * @since 0.3.0
      */
-    public <T extends IComponent> void addComponents(T... components) {
+    @SafeVarargs
+    public final <T extends IComponent> void addComponents(T... components) {
         for (IComponent component : components) {
             try {
                 SypherEngine.domain.addComponent(component, gameObjectID);

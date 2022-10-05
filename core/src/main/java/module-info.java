@@ -4,6 +4,7 @@ module io.github.sypherengine.core {
     requires java.desktop;
     requires io.github.sypherengine.util;
     requires io.github.sypherengine.ecs;
+    requires io.github.sypherengine.physics;
 
     exports dev.aurumbyte.sypherengine.core;
 
@@ -28,11 +29,6 @@ module io.github.sypherengine.core {
     exports dev.aurumbyte.sypherengine.core.config;
 
     opens dev.aurumbyte.sypherengine.core.config to
-            javafx.fxml;
-
-    exports dev.aurumbyte.sypherengine.core.components;
-
-    opens dev.aurumbyte.sypherengine.core.components to
             javafx.fxml;
 
     exports dev.aurumbyte.sypherengine.core.components.scene;
@@ -60,5 +56,7 @@ module io.github.sypherengine.core {
     opens dev.aurumbyte.sypherengine.core.graphics.tiles to
             javafx.fxml;
 
-    exports dev.aurumbyte.sypherengine.core.ecs;
+    exports dev.aurumbyte.sypherengine.core.gameObject;
+    exports dev.aurumbyte.sypherengine.core.graphics.animation;
+    opens dev.aurumbyte.sypherengine.core.graphics.animation to javafx.fxml;
 }

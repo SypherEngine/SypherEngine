@@ -4,16 +4,16 @@ package dev.aurumbyte.sypherengine.physics.primitives;
 import dev.aurumbyte.sypherengine.physics.rigidbody.RigidBody2D;
 import dev.aurumbyte.sypherengine.util.math.Vector2;
 
-public class Box2D {
+public class AABBCollider extends Collider2D {
     private Vector2 size = new Vector2();
     private Vector2 halfSize;
     private RigidBody2D rigidBody;
 
-    public Box2D() {
+    public AABBCollider() {
         this.halfSize = new Vector2(size).multiply(0.5f);
     }
 
-    public Box2D(Vector2 min, Vector2 max) {
+    public AABBCollider(Vector2 min, Vector2 max) {
         this.size = new Vector2(max).subtract(min);
         this.halfSize = new Vector2(size).multiply(0.5f);
     }
@@ -30,23 +30,30 @@ public class Box2D {
         Vector2 min = getMin();
         Vector2 max = getMax();
 
-        Vector2[] vertices = {
-            new Vector2(min.xPos, min.yPos), new Vector2(min.xPos, max.yPos),
-            new Vector2(max.xPos, min.yPos), new Vector2(max.xPos, max.yPos)
+        return new Vector2[]{
+                new Vector2(min.xPos, min.yPos), new Vector2(min.xPos, max.yPos),
+                new Vector2(max.xPos, min.yPos), new Vector2(max.xPos, max.yPos)
         };
+    }
 
-        if (rigidBody.getRotation() != 0.0f) {
-            for (Vector2 vertex : vertices) {
-                // TODO: ROTATE IMPLEMENT
-                // Rotates vertex(Vector2) about center(Vector2) by rotation (float rotation in degrees)
-                // Mathf.rotate(vertex, this.rigidBody.getPosition(), this.rigidBody.getRotation());
-            }
-        }
+    public void setRigidBody(RigidBody2D rigidBody) {
+        this.rigidBody = rigidBody;
+    }
 
-        return vertices;
+    public void setSize(Vector2 size){
+        this.size = size;
+        this.halfSize = new Vector2(size.xPos / 2.0f, size.yPos / 2.0f);
     }
 
     public RigidBody2D getRigidBody() {
-        return this.rigidBody;
+        return rigidBody;
+    }
+
+    public Vector2 getHalfSize() {
+        return halfSize;
+    }
+
+    public Vector2 getSize() {
+        return size;
     }
 }

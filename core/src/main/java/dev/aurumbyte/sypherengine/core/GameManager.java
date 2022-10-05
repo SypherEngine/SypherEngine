@@ -11,21 +11,28 @@ import java.util.Map;
 
 public abstract class GameManager extends Scene {
 
+    private SypherEngine engine;
     Scene currentScene = this;
     InputHandler inputHandler = new InputHandler(SypherEngine.keyListener, SypherEngine.mouseListener);
 
     Map<String, Scene> scenes = new HashMap<>();
+    boolean sceneSwitched = false;
 
     public void gameInit(SypherEngine engine) {
         this.init(engine);
-
+        this.engine = engine;
         engine.getScene().setCamera(currentScene.getCamera().getPerspectiveCamera());
-
-        if (currentScene != this) currentScene.init(engine);
     }
 
     public void gameUpdate(float deltaTime) {
-        if (currentScene != this) this.update(deltaTime);
+        // If the scene is switched, then we initialize the scene, set the camera,
+        // and then continue to update the scene.
+        if(sceneSwitched){
+            currentScene.init(engine);
+            engine.getScene().setCamera(currentScene.getCamera().getPerspectiveCamera());
+            sceneSwitched = false;
+        }
+
         currentScene.update(deltaTime);
         currentScene.getCamera().update();
 
@@ -33,6 +40,7 @@ public abstract class GameManager extends Scene {
             if (entity.isDead()) currentScene.entities.remove(entity);
             entity.update(deltaTime);
             /*
+            TODO: we need component updates as well
             entity.getComponents().forEach(component -> {
                 component.update(deltaTime);
             });
@@ -53,7 +61,6 @@ public abstract class GameManager extends Scene {
             entity.getComponents().forEach(component -> {
                 component.render(engine);
             });
-
              */
             renderer.getGraphicsContext().restore();
         });
@@ -65,6 +72,7 @@ public abstract class GameManager extends Scene {
 
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
+        this.sceneSwitched = true;
     }
 
     public Scene getCurrentScene() {

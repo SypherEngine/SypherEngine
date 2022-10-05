@@ -11,14 +11,18 @@ public class EngineConfig {
     Image icon;
 
     float fixedUpdate = 60;
+    boolean resizable = false;
 
-    public void setTitle(String title) {
+    public EngineConfig withTitle(String title) {
         this.title = title;
+        return this;
     }
 
-    public void setWindowResolution(int width, int height) {
+    public EngineConfig withWindowResolution(int width, int height) {
         this.width = width;
         this.height = height;
+
+        return this;
     }
 
     public String getTitle() {
@@ -33,8 +37,19 @@ public class EngineConfig {
         return width;
     }
 
-    public void setFixedUpdate(float fixedUpdate) {
+    public EngineConfig withFixedUpdate(float fixedUpdate) {
         this.fixedUpdate = fixedUpdate;
+        return this;
+    }
+
+    @Deprecated
+    public EngineConfig isResizable(boolean resizable){
+        this.resizable = resizable;
+        return this;
+    }
+
+    public boolean getResizable(){
+        return resizable;
     }
 
     public float getFixedUpdate() {
@@ -45,8 +60,9 @@ public class EngineConfig {
         return new Vector2(width, height);
     }
 
-    public void setIcon(Image icon) {
+    public EngineConfig withIcon(Image icon) {
         this.icon = icon;
+        return this;
     }
 
     public Image getIcon() {

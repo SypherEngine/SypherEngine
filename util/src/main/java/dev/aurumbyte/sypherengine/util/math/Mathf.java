@@ -68,7 +68,7 @@ public class Mathf {
         vec.setPosition(xPrime, yPrime);
     }
 
-    // Compares flaoting point numbers to the desired precision
+    // Compares floating point numbers to the desired precision
     public static boolean compare(float x, float y, float epsilon) {
         return Math.abs(x - y) <= epsilon * Math.max(1.0f, Math.max(Math.abs(x), Math.abs(y)));
     }
@@ -83,5 +83,9 @@ public class Mathf {
 
     public static boolean compare(Vector2 a, Vector2 b) {
         return compare(a.xPos, b.xPos) && compare(a.yPos, b.yPos);
+    }
+
+    public static float clamp(float value, float min, float max){
+        return Math.max(min, Math.min(max, value));
     }
 }

@@ -7,8 +7,10 @@ import dev.aurumbyte.sypherengine.core.event.MouseListener;
 import dev.aurumbyte.sypherengine.core.event.WindowEventListener;
 import dev.aurumbyte.sypherengine.core.graphics.Renderer;
 import dev.aurumbyte.sypherengine.ecs.Domain;
+import dev.aurumbyte.sypherengine.physics.PhysicsSystem2D;
 import dev.aurumbyte.sypherengine.util.logging.ByteLogger;
 import dev.aurumbyte.sypherengine.util.logging.logUtils.LoggerLevel;
+import dev.aurumbyte.sypherengine.util.math.Vector2;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -81,9 +83,13 @@ public class SypherEngine extends Application {
     /**
      * The width and height of the screen
      */
-    static int width, height;
+    static float width, height;
+
+    //TODO: integrate this into the engine fully
+    PhysicsSystem2D physicsSystem;
 
     boolean isRunning = false;
+    static boolean isResizable = false;
 
     /**
      * <p>The main game loop</p>
@@ -94,8 +100,16 @@ public class SypherEngine extends Application {
     public void start(Stage stage) throws IOException {
         LOGGER.info("Initializing Engine...");
 
+        // And the physics system is up and running, with our specified fixed update and
+        // a specific gravity
+        physicsSystem = new PhysicsSystem2D(fixedUpdate, new Vector2(0, 90));
+
         // Sets everything needed for the objects to render
         Group group = new Group();
+
+        //TODO: find out what group.setAutoSizeChildren() does
+
+
         scene = new Scene(group, width, height);
 
         // The canvas to be rendered upon
@@ -108,6 +122,16 @@ public class SypherEngine extends Application {
         stage.setOnShown(windowEventListener);
         stage.setOnHidden(windowEventListener);
 
+        //window resizing listener
+        /*
+        stage.heightProperty().addListener((observableValue, oldHeight, newHeight) -> {
+            height = ((float)newHeight);
+        });
+        stage.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
+            width = ((float)newWidth);
+        });
+         */
+
         // Setting the title and the screen
         stage.setTitle(title);
 
@@ -115,8 +139,8 @@ public class SypherEngine extends Application {
         if(icon != null) stage.getIcons().add(icon);
 
         stage.setScene(scene);
-        // Sorry, no resizable yet;
-        stage.setResizable(false);
+        stage.setResizable(isResizable);
+        //stage.setResizable(false);
 
         // Initialize the renderer
         renderer = new Renderer(group, scene, canvas);
@@ -169,6 +193,7 @@ public class SypherEngine extends Application {
         SypherEngine.height = 720;
         SypherEngine.fixedUpdate = 60;
         SypherEngine.icon = null;
+        SypherEngine.isResizable = false;
 
         SypherEngine.fps = fixedUpdate;
     }
@@ -186,6 +211,7 @@ public class SypherEngine extends Application {
         SypherEngine.height = 720;
         SypherEngine.fixedUpdate = 60;
         SypherEngine.icon = null;
+        SypherEngine.isResizable = false;
 
         SypherEngine.fps = fixedUpdate;
     }
@@ -203,6 +229,7 @@ public class SypherEngine extends Application {
         SypherEngine.width = config.getScreenWidth();
         SypherEngine.height = config.getScreenHeight();
         SypherEngine.icon = config.getIcon();
+        SypherEngine.isResizable = config.getResizable();
 
         SypherEngine.fps = fixedUpdate;
     }
@@ -219,7 +246,7 @@ public class SypherEngine extends Application {
      * Gets the screen height
      * @since v0.3.0
      */
-    public int getScreenHeight() {
+    public float getScreenHeight() {
         return height;
     }
 
@@ -227,7 +254,7 @@ public class SypherEngine extends Application {
      * Gets the screen width
      * @since v0.3.0
      */
-    public int getScreenWidth() {
+    public float getScreenWidth() {
         return width;
     }
 

@@ -10,7 +10,7 @@ import javafx.scene.image.WritableImage;
  * @author AurumByte
  * @since v0.3.0
  */
-public class ImageTile {
+public class TilesetImage {
     /**
      * The tileset image
      */
@@ -28,7 +28,7 @@ public class ImageTile {
      * @param tileHeight The height of a tile
      * @since 0.3.0
      */
-    public ImageTile(Image image, int tileWidth, int tileHeight) {
+    public TilesetImage(Image image, int tileWidth, int tileHeight) {
         this.image = image;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
@@ -41,7 +41,7 @@ public class ImageTile {
      * @param tileHeight The height of a tile
      * @since 0.3.0
      */
-    public ImageTile(String path, int tileWidth, int tileHeight) {
+    public TilesetImage(String path, int tileWidth, int tileHeight) {
         this.image = new Image(path);
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;

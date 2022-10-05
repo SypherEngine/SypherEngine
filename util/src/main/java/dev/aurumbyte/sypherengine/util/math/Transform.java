@@ -1,10 +1,7 @@
 /* (C)2022 AurumByte */
-package dev.aurumbyte.sypherengine.core.components;
+package dev.aurumbyte.sypherengine.util.math;
 
-import dev.aurumbyte.sypherengine.ecs.component.IComponent;
-import dev.aurumbyte.sypherengine.util.math.Vector2;
-
-public class Transform implements IComponent {
+public class Transform {
     float rotation = 0;
     Vector2 position = new Vector2();
     float scale = 1;
@@ -23,6 +20,7 @@ public class Transform implements IComponent {
 
     public void rotate(float rotation) {
         this.rotation = rotation;
+        this.getPosition().rotate(rotation);
     }
 
     public void move(Vector2 position) {
